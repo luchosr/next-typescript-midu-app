@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Switch from "@material-ui/core/Switch";
 import { RTRcolumns, RTRrows } from "../components/ReadyToReleaseSummaryTable";
 import TollgateDataGrid from "@/components/TollgateDataGrid";
 import { RTBcolumns, RTBrows } from "../components/ReadyToBuildSummaryTable";
@@ -27,7 +28,25 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function SimpleAccordion() {
+  const [state, setState] = React.useState({
+    checkedA: true,
+    checkedB: true,
+  });
+  const [columns, setColumns] = useState(RTBcolumns);
+
   const classes = useStyles();
+  // const [columns, setColumns] = useState(defaultColumns);
+
+  // const change = () => {
+  //   defaultColumns[2].hide = !columns[2].hide;
+  //   setColumns([...defaultColumns]);
+  // };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    setColumns(RTRcolumns);
+  };
+  console.log("columns son ", [...RTBcolumns, ...RTRcolumns]);
 
   return (
     <div className={classes.root}>
@@ -43,10 +62,17 @@ export default function SimpleAccordion() {
         </AccordionSummary>
 
         <AccordionDetails>
-          <TollgateDataGrid rows={RTBrows} columns={RTBcolumns} />
+          {/* <Switch
+            checked={state.checkedB}
+            onChange={handleChange}
+            color="primary"
+            name="checkedB"
+            inputProps={{ "aria-label": "primary checkbox" }}
+          /> */}
+          <TollgateDataGrid />
         </AccordionDetails>
       </Accordion>
-      <Accordion className={classes.accordionWrapper}>
+      {/* <Accordion className={classes.accordionWrapper}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
@@ -59,7 +85,7 @@ export default function SimpleAccordion() {
         <AccordionDetails>
           <TollgateDataGrid rows={RTRrows} columns={RTRcolumns} />
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
     </div>
   );
 }

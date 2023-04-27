@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 
 import App from "./App";
 import TollgateStatus from "./TollgateStatus";
+import GridTest from "./GridTest";
+import ColorTest from "./ColorTest";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +20,9 @@ export default function Home() {
       </Head>
       <main>
         {/* <App /> */}
-        <TollgateStatus />
+        {/* <TollgateStatus /> */}
+        {/* <GridTest /> */}
+        <ColorTest />
       </main>
     </>
   );
