@@ -9,8 +9,25 @@ import {
   GridColDef,
   GridColumnGroupingModel,
 } from "@mui/x-data-grid";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import Link from "@material-ui/core/Link";
+import Modal from "@material-ui/core/Modal";
+import { useState } from "react";
 
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 const preReqColumns: GridColDef[] = [
   {
     field: "applicationName",
@@ -46,7 +63,7 @@ const preReqColumns: GridColDef[] = [
   {
     field: "schremsIIRelevant",
     headerName: "Schrems II Relevant",
-    width: 150,
+    width: 100,
     headerClassName: "appSummary-header",
   },
   {
@@ -90,6 +107,7 @@ const preReqColumns: GridColDef[] = [
     headerName: "Solution Design",
     width: 150,
     headerClassName: "readyToBuild-header",
+    renderCell: (params) => <Link href="#">{params.value}</Link>,
   },
   {
     field: "cloudProductsRegistered",
@@ -232,33 +250,73 @@ const columnGroupingModel: GridColumnGroupingModel = [
   },
 ];
 
-const useStyles = makeStyles({
-  root: {
-    "& .appSummary-header": {
-      backgroundColor: "#8497B0",
-      color: "white",
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      "& .appSummary-header": {
+        backgroundColor: "#8497B0",
+        color: "white",
+        wordWrap: "break-word",
+      },
+      "& .readyToBuild-header": {
+        backgroundColor: "#3459C4",
+        color: "white",
+        wordWrap: "break-word",
+      },
+      "& .readyToRelease-header": {
+        backgroundColor: "#34A1C4",
+        color: "white",
+        wordWrap: "break-word",
+      },
+      "& .rTBTollgateStatus-cell ": {
+        backgroundColor: "#D6DCE4",
+        color: "#44546A",
+        wordWrap: "break-word",
+      },
+      "& .rTRTollgateStatus-cell": {
+        backgroundColor: "#D6DCE4",
+        color: "#44546A",
+        wordWrap: "break-word",
+      },
     },
-    "& .readyToBuild-header": {
-      backgroundColor: "#3459C4",
-      color: "white",
+    paper: {
+      position: "absolute",
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: "2px solid #000",
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
     },
-    "& .readyToRelease-header": {
-      backgroundColor: "#34A1C4",
-      color: "white",
-    },
-    "& .rTBTollgateStatus-cell ": {
-      backgroundColor: "#D6DCE4",
-      color: "#44546A",
-    },
-    "& .rTRTollgateStatus-cell": {
-      backgroundColor: "#D6DCE4",
-      color: "#44546A",
-    },
-  },
-});
+  })
+);
 
 export default function StylingHeaderGrid() {
   const classes = useStyles();
+  const [finalClickInfo, setFinalClickInfo] = useState(null);
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOnCellClick = (params: any) => {
+    setFinalClickInfo(params);
+    finalClickInfo?.field === "solutionDesign" && setOpen(true);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <h2 id="simple-modal-title">Text in a modal</h2>
+      <p id="simple-modal-description">
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      </p>
+    </div>
+  );
 
   return (
     <div
@@ -266,6 +324,20 @@ export default function StylingHeaderGrid() {
       className={classes.root}
     >
       <DataGrid
+        sx={{
+          "& .MuiDataGrid-columnHeaderTitle": {
+            whiteSpace: "normal",
+            lineHeight: "normal",
+          },
+          "& .MuiDataGrid-columnHeader": {
+            // Forced to use important since overriding inline styles
+            height: "unset !important",
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            // Forced to use important since overriding inline styles
+            maxHeight: "168px !important",
+          },
+        }}
         rows={preReqRows}
         columns={preReqColumns}
         experimentalFeatures={{ columnGrouping: true }}
@@ -277,7 +349,22 @@ export default function StylingHeaderGrid() {
         density={"compact"}
         columnGroupingModel={columnGroupingModel}
         disableSelectionOnClick
+        onCellClick={handleOnCellClick}
       />
+      {finalClickInfo &&
+        `Final clicked id = ${finalClickInfo.id}, 
+        Final clicked field = ${finalClickInfo.field}, 
+        Final clicked value = ${finalClickInfo.value}`}
+      {!finalClickInfo && `Click on a column`}
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
     </div>
   );
 }
