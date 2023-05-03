@@ -18,7 +18,14 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import Paper from "@material-ui/core/Paper";
 import TablePagination from "@material-ui/core/TablePagination";
-import { Modal, TextField } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+} from "@mui/material";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -46,10 +53,18 @@ const useRowStyles = makeStyles((theme: Theme) =>
         marginLeft: 150,
       },
     },
+    formControl: {
+      margin: theme.spacing(1),
+      width: "280px",
+      display: "block",
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
     paper: {
       position: "absolute",
       width: "50%",
-      height: 400,
+      height: 700,
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
@@ -114,6 +129,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [deploymentPatterns, setDeploymentPatterns] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useRowStyles();
 
@@ -124,18 +140,67 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   const handleModalClose = () => {
     setModalOpen(false);
   };
+  const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setDeploymentPatterns(event.target.value as string);
+  };
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title" style={{ fontFamily: "inherited" }}>
-        Solution Design
+        Edit Fields
       </h2>
-      {/* <p id="simple-modal-description">{`hola modal ${finalClickInfo?.field}`}</p> */}
+
       <form style={{ marginLeft: "100px" }}>
+        <h4>Ready To Build Fields</h4>
         <TextField
-          id="outlined-helperText"
-          label="Insert URL *"
-          defaultValue=""
+          id="solution-design"
+          label="Solution Design"
+          defaultValue="www.google.com"
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", margin: " auto" }}
+          // onChange={}
+        />
+        <TextField
+          id="solution-design-comment"
+          label="Solution Design Comments"
+          defaultValue="Hello I'm a comment"
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", margin: "35px auto" }}
+          // onChange={}
+        />
+
+        <TextField
+          id="cloud-product-registration"
+          label="Cloud Product Registration & Cloud Product Check"
+          defaultValue="Cloud Product Registration page in Backstage"
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", margin: "0px auto" }}
+        />
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="demo-simple-select-outlined-label">
+            Deployment Patterns
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            value=""
+            onChange={handleSelectChange}
+            label="Deployment Patterns"
+          >
+            <MenuItem value={"yes"}>Yes</MenuItem>
+            <MenuItem value={"no"}>No</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          id="deployment-pattern-comment"
+          label="Deployment Patterns Comments"
+          defaultValue="Hello I'm a comment"
           autoComplete="off"
           // helperText="Some important text"
           variant="outlined"
@@ -143,14 +208,15 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           // onChange={}
         />
         <TextField
-          id="outlined-helperText"
-          label="Comment"
-          defaultValue=""
+          id="blueprint"
+          label="Blueprint"
+          defaultValue="waltz.intranet.db.com/waltz/...../NAR-ID"
           autoComplete="off"
           // helperText="Some important text"
           variant="outlined"
           style={{ width: "80%", margin: "0px auto" }}
         />
+
         <div
           style={{
             display: "flex",
