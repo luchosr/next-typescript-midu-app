@@ -23,8 +23,8 @@ export default function Home() {
         {/* <App /> */}
         {/* <TollgateStatus /> */}
         {/* <GridTest /> */}
-        {/* <UI04 /> */}
-        <UI25 />
+        <UI04 />
+        {/* <UI25 /> */}
       </main>
     </>
   );
