@@ -4,6 +4,7 @@ import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
+import InfoIcon from "@material-ui/icons/Info";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -18,7 +19,6 @@ import Button from "@material-ui/core/Button";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import EditIcon from "@material-ui/icons/Edit";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import CancelIcon from "@material-ui/icons/Cancel";
 import CloseIcon from "@material-ui/icons/Close";
 import Paper from "@material-ui/core/Paper";
@@ -69,12 +69,13 @@ const useRowStyles = makeStyles((theme: Theme) =>
     paper: {
       position: "absolute",
       width: "50%",
-      height: 700,
+      height: 600,
       fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
+      overflow: "auto",
     },
     deploymentPatternsSelect: {
       margin: "30px",
@@ -181,6 +182,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [readyToBuildModalOpen, setReadyToBuildModalOpen] =
     React.useState(false);
+  const [readyToReleaseModalOpen, setReadyToReleaseModalOpen] =
+    React.useState(false);
   const [deploymentPatterns, setDeploymentPatterns] = React.useState("yes");
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useRowStyles();
@@ -194,6 +197,15 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   const handleReadyToBuildModalClose = () => {
     setReadyToBuildModalOpen(false);
   };
+
+  const handleReadyToReleaseModalOpen = () => {
+    setReadyToReleaseModalOpen(true);
+  };
+
+  const handleReadyToReleaseModalClose = () => {
+    setReadyToReleaseModalOpen(false);
+  };
+
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const deploymentPatternsSelect = event.target.value;
     setDeploymentPatterns(deploymentPatternsSelect);
@@ -316,6 +328,114 @@ function Row(props: { row: ReturnType<typeof createData> }) {
       </form>
     </div>
   );
+  const readyToReleaseBody = (
+    <div style={modalStyle} className={classes.paper}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <h2 id="simple-modal-title">Edit Ready to Release fields</h2>
+        <span
+          style={{ cursor: "pointer" }}
+          onClick={handleReadyToReleaseModalClose}
+        >
+          <CloseIcon />
+        </span>
+      </div>
+
+      <form style={{ marginLeft: "100px", marginTop: "30px" }}>
+        <TextField
+          id="solution-design"
+          label="Resiliency Measure Test Results"
+          defaultValue="www.urlGivenByUser.com"
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", margin: " auto" }}
+          // onChange={}
+        />
+        <TextField
+          id="solution-design-comment"
+          label="Resiliency Measure Test Results Comments"
+          defaultValue="Hello I'm a Resiliency Measure Test Results comment"
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", margin: "35px auto" }}
+          // onChange={}
+        />
+
+        <TextField
+          id="cloud-product-registration"
+          label="Auditing, Logging, Monitoring, Alerting Metrics"
+          defaultValue="www.urlGivenByUser.com"
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", marginBottom: "30px" }}
+        />
+
+        <TextField
+          id="auditing-logging-monitoring-alerting-metrics"
+          label="Auditing, Logging, Monitoring, Alerting Metrics Comments"
+          defaultValue="Hello, I'm an Auditing, Logging, Monitoring, Alerting Metrics comment"
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", marginBottom: "35px" }}
+          // onChange={}
+        />
+        <TextField
+          id="ekm-verification-evidencing"
+          label="EKM Verification & Evidencing"
+          defaultValue="www.urlGivenByUser.com"
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", marginBottom: "35px" }}
+        />
+        <TextField
+          id="ekm-verification-evidencing-comment"
+          label="EKM Verification & Evidencing comments"
+          defaultValue="Hello, I'm an EKM Verification & Evidencing comment"
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", margin: "0px auto" }}
+        />
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            marginRight: "20%",
+            marginTop: 30,
+          }}
+        >
+          <Button
+            variant="contained"
+            style={{ margin: "0 20px" }}
+            color="primary"
+            // disabled={!linkUrl}
+            onClick={handleReadyToReleaseModalClose}
+          >
+            Save
+          </Button>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "#FFFF", color: "black" }}
+            onClick={handleReadyToReleaseModalClose}
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
 
   function handleClick(row: {
     name: string;
@@ -354,7 +474,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           {row.name === "Ready to Release" && (
             <Button
               variant="filled"
-              onClick={() => handleReadyToBuildModalOpen()}
+              onClick={() => handleReadyToReleaseModalOpen()}
               style={{
                 textTransform: "capitalize",
                 fontSize: "12px",
@@ -420,12 +540,30 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         </Link>
                       </TableCell>
                       <TableCell align="left">
+                        {field.status === "Self Served" && (
+                          <span
+                            style={{
+                              color: "#0A7CB5",
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center",
+                            }}
+                          >
+                            <InfoIcon
+                              style={{
+                                marginRight: "5px",
+                              }}
+                            />
+                            {field.status}
+                          </span>
+                        )}
                         {field.status === "Completed" && (
                           <span
                             style={{
                               color: "#01579B",
                               display: "flex",
-                              alignItems: "baseline",
+                              flexDirection: "row",
+                              alignItems: "center",
                             }}
                           >
                             <CheckCircleIcon
@@ -438,8 +576,19 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         )}
 
                         {field.status === "Not required" && (
-                          <span>
-                            <CancelIcon /> {field.status}
+                          <span
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center",
+                            }}
+                          >
+                            <CancelIcon
+                              style={{
+                                marginRight: "5px",
+                              }}
+                            />{" "}
+                            {field.status}
                           </span>
                         )}
                         {field.status === "In progress" && (
@@ -447,14 +596,15 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                             style={{
                               color: "#FFAA00",
                               display: "flex",
-                              alignItems: "baseline",
+                              flexDirection: "row",
+                              alignItems: "center",
                             }}
                           >
                             <PlayCircleFilledIcon
                               style={{
                                 marginRight: "5px",
                               }}
-                            />{" "}
+                            />
                             {field.status}
                           </span>
                         )}
@@ -463,14 +613,15 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                             style={{
                               color: "#8894A8",
                               display: "flex",
-                              alignItems: "baseline",
+                              flexDirection: "row",
+                              alignItems: "center",
                             }}
                           >
                             <WatchLaterIcon
                               style={{
                                 marginRight: "5px",
                               }}
-                            />{" "}
+                            />
                             {field.status}
                           </span>
                         )}
@@ -497,6 +648,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         aria-describedby="simple-modal-description"
       >
         {readyToBuildBody}
+      </Modal>
+      <Modal
+        open={readyToReleaseModalOpen}
+        onClose={handleReadyToReleaseModalClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {readyToReleaseBody}
       </Modal>
     </React.Fragment>
   );
