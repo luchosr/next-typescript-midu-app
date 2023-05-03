@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import App from "./App";
 import TollgateStatus from "./TollgateStatus";
 import GridTest from "./GridTest";
-import ColorTest from "./ColorTest";
+import UI04 from "./UI04";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export default function Home() {
         {/* <App /> */}
         {/* <TollgateStatus /> */}
         {/* <GridTest /> */}
-        <ColorTest />
+        <UI04 />
       </main>
     </>
   );

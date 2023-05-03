@@ -13,6 +13,7 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import Modal from "@material-ui/core/Modal";
 import { useState } from "react";
+import { Button, TextField } from "@mui/material";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -281,7 +282,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       position: "absolute",
-      width: 400,
+      width: "50%",
+      height: 400,
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
@@ -295,6 +297,7 @@ export default function StylingHeaderGrid() {
   const [finalClickInfo, setFinalClickInfo] = useState(null);
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
+  const [linkUrl, setLinkUrl] = useState("");
 
   const handleOnCellClick = (params: any) => {
     setFinalClickInfo(params);
@@ -307,14 +310,62 @@ export default function StylingHeaderGrid() {
 
   const handleClose = () => {
     setOpen(false);
+    setLinkUrl("");
   };
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
+      <h2 id="simple-modal-title" style={{ fontFamily: "inherited" }}>
+        Solution Design
+      </h2>
+      {/* <p id="simple-modal-description">{`hola modal ${finalClickInfo?.field}`}</p> */}
+      <form style={{ marginLeft: "100px" }}>
+        <TextField
+          id="outlined-helperText"
+          label="Insert URL *"
+          defaultValue=""
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", margin: "35px auto" }}
+          onChange={(event) => setLinkUrl(event.target.value)}
+        />
+        <TextField
+          id="outlined-helperText"
+          label="Comment"
+          defaultValue=""
+          autoComplete="off"
+          // helperText="Some important text"
+          variant="outlined"
+          style={{ width: "80%", margin: "0px auto" }}
+        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            marginRight: "20%",
+            marginTop: 30,
+          }}
+        >
+          <Button
+            variant="contained"
+            style={{ margin: "0 20px" }}
+            color="primary"
+            disabled={!linkUrl}
+            onClick={handleClose}
+          >
+            Save
+          </Button>
+          <Button
+            variant="contained"
+            style={{ backgroundColor: "#FFFF", color: "black" }}
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
     </div>
   );
 
@@ -346,16 +397,16 @@ export default function StylingHeaderGrid() {
         components={{
           Toolbar: CustomToolbar,
         }}
+        disableSelectionOnClick
         density={"compact"}
         columnGroupingModel={columnGroupingModel}
-        disableSelectionOnClick
         onCellClick={handleOnCellClick}
       />
-      {finalClickInfo &&
+      {/* {finalClickInfo &&
         `Final clicked id = ${finalClickInfo.id}, 
         Final clicked field = ${finalClickInfo.field}, 
         Final clicked value = ${finalClickInfo.value}`}
-      {!finalClickInfo && `Click on a column`}
+      {!finalClickInfo && `Click on a column`} */}
 
       <Modal
         open={open}
