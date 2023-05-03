@@ -29,8 +29,8 @@ import { CARFStackedBarChart } from "./CARFStackedBarChart";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: "100%",
-      margin: "0px",
+      width: "95%",
+      margin: "0px 28px",
     },
     heading: {
       fontSize: theme.typography.pxToRem(27),
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(3),
     },
     textField: {
-      width: "25ch",
+      // width: "25ch",
     },
     homeButton: {
       display: "flex",

@@ -1,14 +1,17 @@
 import React from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
+import Link from "@material-ui/core/Link";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
+import WatchLaterIcon from "@material-ui/icons/WatchLater";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
@@ -16,6 +19,8 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import EditIcon from "@material-ui/icons/Edit";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import CancelIcon from "@material-ui/icons/Cancel";
+import CloseIcon from "@material-ui/icons/Close";
 import Paper from "@material-ui/core/Paper";
 import TablePagination from "@material-ui/core/TablePagination";
 import {
@@ -26,6 +31,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { spawn } from "child_process";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -54,7 +60,6 @@ const useRowStyles = makeStyles((theme: Theme) =>
       },
     },
     formControl: {
-      margin: theme.spacing(1),
       width: "280px",
       display: "block",
     },
@@ -65,10 +70,14 @@ const useRowStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       width: "50%",
       height: 700,
+      fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
+    },
+    deploymentPatternsSelect: {
+      margin: "30px",
     },
     mainTableCell: { paddingLeft: 10, width: "80%" },
     dropdownIconButton: { marginRight: 10 },
@@ -114,11 +123,53 @@ const rows = [
       rationale:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
     },
+    {
+      name: "Information Classification",
+      status: "In progress",
+      rationale:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
+    },
+    {
+      name: "Solution Design",
+      status: "In progress",
+      rationale:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
+    },
+    {
+      name: "Cloud Product Registration & Cloud Product Check",
+      status: "Not started",
+      rationale:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
+    },
+    {
+      name: "Deployment Patterns",
+      status: "Not started",
+      rationale:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
+    },
+    {
+      name: "Blueprint",
+      status: "Not required",
+      rationale:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
+    },
   ]),
   createData("Ready to Release", [
     {
-      name: "RTO / RPO",
-      status: "Completed",
+      name: "Resiliency Measure Test Results",
+      status: "Not started",
+      rationale:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
+    },
+    {
+      name: "Auditing, Logging, Monitoring, Alerting Metrics",
+      status: "Not required",
+      rationale:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
+    },
+    {
+      name: "EKM Verification & Evidencing",
+      status: "Not started",
       rationale:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
     },
@@ -128,30 +179,45 @@ const rows = [
 function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
-  const [modalOpen, setModalOpen] = React.useState(false);
-  const [deploymentPatterns, setDeploymentPatterns] = React.useState(false);
+  const [readyToBuildModalOpen, setReadyToBuildModalOpen] =
+    React.useState(false);
+  const [deploymentPatterns, setDeploymentPatterns] = React.useState("yes");
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useRowStyles();
+  const preventDefault = (event: React.SyntheticEvent) =>
+    event.preventDefault();
 
-  const handleModalOpen = () => {
-    setModalOpen(true);
+  const handleReadyToBuildModalOpen = () => {
+    setReadyToBuildModalOpen(true);
   };
 
-  const handleModalClose = () => {
-    setModalOpen(false);
+  const handleReadyToBuildModalClose = () => {
+    setReadyToBuildModalOpen(false);
   };
-  const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setDeploymentPatterns(event.target.value as string);
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const deploymentPatternsSelect = event.target.value;
+    setDeploymentPatterns(deploymentPatternsSelect);
   };
 
-  const body = (
+  const readyToBuildBody = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title" style={{ fontFamily: "inherited" }}>
-        Edit Fields
-      </h2>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <h2 id="simple-modal-title">Edit Ready to Build fields</h2>
+        <span
+          style={{ cursor: "pointer" }}
+          onClick={handleReadyToBuildModalClose}
+        >
+          <CloseIcon />
+        </span>
+      </div>
 
-      <form style={{ marginLeft: "100px" }}>
-        <h4>Ready To Build Fields</h4>
+      <form style={{ marginLeft: "100px", marginTop: "30px" }}>
         <TextField
           id="solution-design"
           label="Solution Design"
@@ -165,7 +231,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TextField
           id="solution-design-comment"
           label="Solution Design Comments"
-          defaultValue="Hello I'm a comment"
+          defaultValue="Hello I'm a Solution Design comment"
           autoComplete="off"
           // helperText="Some important text"
           variant="outlined"
@@ -180,7 +246,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           autoComplete="off"
           // helperText="Some important text"
           variant="outlined"
-          style={{ width: "80%", margin: "0px auto" }}
+          style={{ width: "80%", marginBottom: "30px" }}
         />
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel id="demo-simple-select-outlined-label">
@@ -188,10 +254,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           </InputLabel>
           <Select
             labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value=""
+            id="deployment-patterns"
+            value={deploymentPatterns}
             onChange={handleSelectChange}
             label="Deployment Patterns"
+            inputProps={{
+              deploymentPatterns: deploymentPatterns,
+              id: "outlined-age-native-simple",
+            }}
           >
             <MenuItem value={"yes"}>Yes</MenuItem>
             <MenuItem value={"no"}>No</MenuItem>
@@ -200,7 +270,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TextField
           id="deployment-pattern-comment"
           label="Deployment Patterns Comments"
-          defaultValue="Hello I'm a comment"
+          defaultValue="Hello I'm a Deployment Patterns comment"
           autoComplete="off"
           // helperText="Some important text"
           variant="outlined"
@@ -231,14 +301,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             style={{ margin: "0 20px" }}
             color="primary"
             // disabled={!linkUrl}
-            onClick={handleModalClose}
+            onClick={handleReadyToBuildModalClose}
           >
             Save
           </Button>
           <Button
             variant="contained"
             style={{ backgroundColor: "#FFFF", color: "black" }}
-            onClick={handleModalClose}
+            onClick={handleReadyToBuildModalClose}
           >
             Cancel
           </Button>
@@ -271,7 +341,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           {row.name === "Ready to Build" && (
             <Button
               variant="filled"
-              onClick={() => handleModalOpen()}
+              onClick={() => handleReadyToBuildModalOpen()}
               style={{
                 textTransform: "capitalize",
                 fontSize: "12px",
@@ -284,7 +354,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           {row.name === "Ready to Release" && (
             <Button
               variant="filled"
-              onClick={() => handleModalOpen()}
+              onClick={() => handleReadyToBuildModalOpen()}
               style={{
                 textTransform: "capitalize",
                 fontSize: "12px",
@@ -308,9 +378,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         >
           <Button
             variant="contained"
-            disabled="false"
-            onClick={() => handleOpen()}
-            style={{ textTransform: "capitalize", fontSize: "12px" }}
+            disabled={true}
+            // onClick={() => handleOpen()}
+            style={{
+              textTransform: "capitalize",
+              fontSize: "12px",
+              // backgroundColor: "#0B62DA",
+              // color: "#FFFFFF",
+            }}
           >
             <CheckCircleOutlineIcon style={{ marginRight: "5px" }} /> Submit
           </Button>
@@ -323,7 +398,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           <Collapse in={dropdownOpen} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Table size="small" aria-label="purchases">
-                <TableHead>
+                <TableHead style={{ backgroundColor: "#EDEFF2" }}>
                   <TableRow>
                     <TableCell align="left">Pre-Requisite</TableCell>
                     <TableCell align="left">Status</TableCell>
@@ -332,15 +407,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                   </TableRow>
                 </TableHead>
                 <TableBody style={{ marginLeft: 55 }}>
-                  {/* {row.history.map(historyRow => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        hola soy un date
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                    </TableRow>
-                  ))} */}
                   {row.fields.map((field) => (
                     <TableRow key={field?.name}>
                       <TableCell
@@ -349,9 +415,66 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         scope="row"
                         style={{ width: "33%" }}
                       >
-                        {field?.name}
+                        <Link href="#" onClick={preventDefault}>
+                          {field?.name}
+                        </Link>
                       </TableCell>
-                      <TableCell align="left">{field?.status}</TableCell>
+                      <TableCell align="left">
+                        {field.status === "Completed" && (
+                          <span
+                            style={{
+                              color: "#01579B",
+                              display: "flex",
+                              alignItems: "baseline",
+                            }}
+                          >
+                            <CheckCircleIcon
+                              style={{
+                                marginRight: "5px",
+                              }}
+                            />
+                            {field.status}
+                          </span>
+                        )}
+
+                        {field.status === "Not required" && (
+                          <span>
+                            <CancelIcon /> {field.status}
+                          </span>
+                        )}
+                        {field.status === "In progress" && (
+                          <span
+                            style={{
+                              color: "#FFAA00",
+                              display: "flex",
+                              alignItems: "baseline",
+                            }}
+                          >
+                            <PlayCircleFilledIcon
+                              style={{
+                                marginRight: "5px",
+                              }}
+                            />{" "}
+                            {field.status}
+                          </span>
+                        )}
+                        {field.status === "Not started" && (
+                          <span
+                            style={{
+                              color: "#8894A8",
+                              display: "flex",
+                              alignItems: "baseline",
+                            }}
+                          >
+                            <WatchLaterIcon
+                              style={{
+                                marginRight: "5px",
+                              }}
+                            />{" "}
+                            {field.status}
+                          </span>
+                        )}
+                      </TableCell>
                       <TableCell align="left" style={{ overflow: "hidden" }}>
                         {field?.rationale}
                       </TableCell>
@@ -368,12 +491,12 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         </TableCell>
       </TableRow>
       <Modal
-        open={modalOpen}
-        onClose={handleModalClose}
+        open={readyToBuildModalOpen}
+        onClose={handleReadyToBuildModalClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        {body}
+        {readyToBuildBody}
       </Modal>
     </React.Fragment>
   );
@@ -402,45 +525,6 @@ export const CARFCollapsibleTable = () => {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
-        {/* <TableHead>
-          <TableRow
-            style={{
-              backgroundColor: "#EDEFF2",
-              width: "100%",
-            }}
-          >
-            <TableCell
-              style={{
-                color: "#000000DE",
-                width: "35%",
-                fontSize: "1rem",
-                paddingLeft: "50px",
-              }}
-            >
-              Pre-Requisite
-            </TableCell>
-            <TableCell
-              align="left"
-              style={{ width: "10%", color: "#000000DE", fontSize: "1rem" }}
-            >
-              | Status
-            </TableCell>
-            <TableCell
-              align="left"
-              style={{ width: "35%", color: "#000000DE", fontSize: "1rem" }}
-            >
-              | Rationale
-            </TableCell>
-            <TableCell
-              align="left"
-              style={{ width: "7%", color: "#000000DE", fontSize: "1rem" }}
-            >
-              | Label
-            </TableCell>
-            <TableCell align="left"></TableCell>
-            <TableCell align="left"></TableCell>
-          </TableRow>
-        </TableHead> */}
         <TableBody>
           {rows.map((row) => (
             <Row key={row.name} row={row} />
@@ -459,10 +543,3 @@ export const CARFCollapsibleTable = () => {
     </TableContainer>
   );
 };
-// function rand() {
-//   throw new Error("Function not implemented.");
-// }
-
-// function setLinkUrl(value: string): void {
-//   throw new Error("Function not implemented.");
-// }
