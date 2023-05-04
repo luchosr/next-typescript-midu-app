@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { rows, createData, Fields } from "./mockedData";
 import Box from "@material-ui/core/Box";
 import Link from "@material-ui/core/Link";
 import Collapse from "@material-ui/core/Collapse";
@@ -69,7 +70,7 @@ const useRowStyles = makeStyles((theme: Theme) =>
     paper: {
       position: "absolute",
       width: "50%",
-      height: 600,
+      height: "80%",
       fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
@@ -84,98 +85,6 @@ const useRowStyles = makeStyles((theme: Theme) =>
     dropdownIconButton: { marginRight: 10 },
   })
 );
-
-interface Fields {
-  name: string;
-  status: string;
-  rationale: string;
-}
-
-function createData(name: string, fields: Fields[]) {
-  return {
-    name,
-    fields,
-    history: [
-      { date: "2020-01-05", customerId: "11091700", amount: 3 },
-      { date: "2020-01-02", customerId: "Anonymous", amount: 1 },
-    ],
-  };
-}
-
-const rows = [
-  createData("Ready to Design", [
-    {
-      name: "Advisory",
-      status: "Self Served",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-  ]),
-  createData("Ready to Build", [
-    {
-      name: "Ready to Build Survey",
-      status: "Completed",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-    {
-      name: "RTO / RPO",
-      status: "Completed",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-    {
-      name: "Information Classification",
-      status: "In progress",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-    {
-      name: "Solution Design",
-      status: "In progress",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-    {
-      name: "Cloud Product Registration & Cloud Product Check",
-      status: "Not started",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-    {
-      name: "Deployment Patterns",
-      status: "Not started",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-    {
-      name: "Blueprint",
-      status: "Not required",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-  ]),
-  createData("Ready to Release", [
-    {
-      name: "Resiliency Measure Test Results",
-      status: "Not started",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-    {
-      name: "Auditing, Logging, Monitoring, Alerting Metrics",
-      status: "Not required",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-    {
-      name: "EKM Verification & Evidencing",
-      status: "Not started",
-      rationale:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor",
-    },
-  ]),
-];
 
 function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
@@ -460,7 +369,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           {row.name}
           {row.name === "Ready to Build" && (
             <Button
-              variant="filled"
+              variant="text"
               onClick={() => handleReadyToBuildModalOpen()}
               style={{
                 textTransform: "capitalize",
@@ -473,7 +382,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           )}
           {row.name === "Ready to Release" && (
             <Button
-              variant="filled"
+              variant="text"
               onClick={() => handleReadyToReleaseModalOpen()}
               style={{
                 textTransform: "capitalize",
@@ -587,7 +496,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                               style={{
                                 marginRight: "5px",
                               }}
-                            />{" "}
+                            />
                             {field.status}
                           </span>
                         )}
