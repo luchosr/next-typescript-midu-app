@@ -39,13 +39,12 @@ function rand() {
 }
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 10;
+  const left = 25;
 
   return {
     top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    margin: "auto",
   };
 }
 const useRowStyles = makeStyles((theme: Theme) =>
@@ -61,7 +60,7 @@ const useRowStyles = makeStyles((theme: Theme) =>
       },
     },
     formControl: {
-      width: "280px",
+      width: "60%",
       display: "block",
     },
     selectEmpty: {
@@ -69,8 +68,8 @@ const useRowStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       position: "absolute",
-      width: "50%",
-      height: "80%",
+      width: "900px",
+      height: "550px",
       fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
@@ -139,28 +138,38 @@ function Row(props: { row: ReturnType<typeof createData> }) {
       </div>
 
       <form style={{ marginLeft: "100px", marginTop: "30px" }}>
-        <TextField
-          id="solution-design"
-          label="Solution Design"
-          defaultValue="www.google.com"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "80%", margin: " auto" }}
-          // onChange={}
-        />
-        <TextField
-          id="solution-design-comment"
-          label="Solution Design Comments"
-          defaultValue="Hello I'm a Solution Design comment"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "80%", margin: "35px auto" }}
-          // onChange={}
-        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "70%",
+            marginBottom: "25px",
+            justifyContent: "space-between",
+          }}
+        >
+          <TextField
+            id="solution-design"
+            label="Solution Design"
+            defaultValue="www.google.com"
+            autoComplete="off"
+            // helperText="Some important text"
+            variant="outlined"
+            style={{ width: "60%" }}
+            // onChange={}
+          />
+          <TextField
+            id="solution-design-comment"
+            label="Solution Design Comments"
+            defaultValue="Hello I'm a Solution Design comment"
+            autoComplete="off"
+            // helperText="Some important text"
+            variant="outlined"
+            style={{ width: "35%" }}
+            // onChange={}
+          />
+        </div>
 
-        <TextField
+        {/* <TextField
           id="cloud-product-registration"
           label="Cloud Product Registration & Cloud Product Check"
           defaultValue="Cloud Product Registration page in Backstage"
@@ -168,36 +177,52 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           // helperText="Some important text"
           variant="outlined"
           style={{ width: "80%", marginBottom: "30px" }}
-        />
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="demo-simple-select-outlined-label">
-            Deployment Patterns
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-outlined-label"
-            id="deployment-patterns"
-            value={deploymentPatterns}
-            onChange={handleSelectChange}
-            label="Deployment Patterns"
-            inputProps={{
-              deploymentPatterns: deploymentPatterns,
-              id: "outlined-age-native-simple",
-            }}
-          >
-            <MenuItem value={"yes"}>Yes</MenuItem>
-            <MenuItem value={"no"}>No</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          id="deployment-pattern-comment"
-          label="Deployment Patterns Comments"
-          defaultValue="Hello I'm a Deployment Patterns comment"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "80%", margin: "35px auto" }}
-          // onChange={}
-        />
+        /> */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "70%",
+            marginBottom: "25px",
+            justifyContent: "space-between",
+          }}
+        >
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel id="demo-simple-select-outlined-label">
+              Deployment Patterns
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="deployment-patterns"
+              value={deploymentPatterns}
+              onChange={handleSelectChange}
+              label="Deployment Patterns"
+              inputProps={{
+                deploymentPatterns: deploymentPatterns,
+                id: "outlined-age-native-simple",
+              }}
+            >
+              <MenuItem value={"yes"}>
+                Yes - the design implements ALL relevant deployment patterns
+              </MenuItem>
+              <MenuItem value={"no"}>
+                No - the design DOES NOT implement ALL of the deployment
+                patterns
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            id="deployment-pattern-comment"
+            label="Deployment Patterns Comments"
+            defaultValue="Hello I'm a Deployment Patterns comment"
+            autoComplete="off"
+            // helperText="Some important text"
+            variant="outlined"
+            style={{ width: "35%" }}
+            // onChange={}
+          />
+        </div>
+
         <TextField
           id="blueprint"
           label="Blueprint"
@@ -205,7 +230,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           autoComplete="off"
           // helperText="Some important text"
           variant="outlined"
-          style={{ width: "80%", margin: "0px auto" }}
+          style={{ width: "42%", margin: "0px auto" }}
         />
 
         <div
@@ -213,8 +238,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
-            marginRight: "20%",
-            marginTop: 30,
+            marginRight: "30%",
+            marginTop: 50,
           }}
         >
           <Button
@@ -256,73 +281,105 @@ function Row(props: { row: ReturnType<typeof createData> }) {
       </div>
 
       <form style={{ marginLeft: "100px", marginTop: "30px" }}>
-        <TextField
-          id="solution-design"
-          label="Resiliency Measure Test Results"
-          defaultValue="www.urlGivenByUser.com"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "80%", margin: " auto" }}
-          // onChange={}
-        />
-        <TextField
-          id="solution-design-comment"
-          label="Resiliency Measure Test Results Comments"
-          defaultValue="Hello I'm a Resiliency Measure Test Results comment"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "80%", margin: "35px auto" }}
-          // onChange={}
-        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "70%",
+            marginBottom: "25px",
+            justifyContent: "space-between",
+          }}
+        >
+          <TextField
+            id="solution-design"
+            label="Resiliency Measure Test Results"
+            defaultValue="www.urlGivenByUser.com"
+            autoComplete="off"
+            // helperText="Some important text"
+            variant="outlined"
+            style={{ width: "60%" }}
+            // onChange={}
+          />
+          <TextField
+            id="solution-design-comment"
+            label="Comments"
+            defaultValue=""
+            autoComplete="off"
+            // helperText="Some important text"
+            variant="outlined"
+            style={{ width: "35%" }}
+            // onChange={}
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "70%",
+            marginBottom: "25px",
+            justifyContent: "space-between",
+          }}
+        >
+          <TextField
+            id="cloud-product-registration"
+            label="Auditing, Logging, Monitoring, Alerting Metrics"
+            defaultValue="www.urlGivenByUser.com"
+            autoComplete="off"
+            // helperText="Some important text"
+            variant="outlined"
+            style={{ width: "60%" }}
+          />
 
-        <TextField
-          id="cloud-product-registration"
-          label="Auditing, Logging, Monitoring, Alerting Metrics"
-          defaultValue="www.urlGivenByUser.com"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "80%", marginBottom: "30px" }}
-        />
-
-        <TextField
-          id="auditing-logging-monitoring-alerting-metrics"
-          label="Auditing, Logging, Monitoring, Alerting Metrics Comments"
-          defaultValue="Hello, I'm an Auditing, Logging, Monitoring, Alerting Metrics comment"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "80%", marginBottom: "35px" }}
-          // onChange={}
-        />
-        <TextField
-          id="ekm-verification-evidencing"
-          label="EKM Verification & Evidencing"
-          defaultValue="www.urlGivenByUser.com"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "80%", marginBottom: "35px" }}
-        />
-        <TextField
-          id="ekm-verification-evidencing-comment"
-          label="EKM Verification & Evidencing comments"
-          defaultValue="Hello, I'm an EKM Verification & Evidencing comment"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "80%", margin: "0px auto" }}
-        />
+          <TextField
+            id="auditing-logging-monitoring-alerting-metrics"
+            label="Comments"
+            defaultValue=""
+            autoComplete="off"
+            // helperText="Some important text"
+            variant="outlined"
+            style={{ width: "35%" }}
+            // onChange={}
+          />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "70%",
+            marginBottom: "25px",
+            justifyContent: "space-between",
+            // padding: 15,
+            // border: "1px solid #0B62DA",
+            // borderRadius: 15,
+          }}
+        >
+          <TextField
+            id="ekm-verification-evidencing"
+            label="EKM Verification & Evidencing"
+            defaultValue="www.urlGivenByUser.com"
+            autoComplete="off"
+            // helperText="Some important text"
+            variant="outlined"
+            style={{ width: "60%" }}
+          />
+          <TextField
+            id="ekm-verification-evidencing-comment"
+            label="Comments"
+            defaultValue=""
+            autoComplete="off"
+            // helperText="Some important text"
+            variant="outlined"
+            style={{ width: "35%" }}
+          />
+        </div>
 
         <div
           style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
-            marginRight: "20%",
-            marginTop: 30,
+            marginRight: "30%",
+            marginTop: 50,
           }}
         >
           <Button
@@ -555,6 +612,11 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         onClose={handleReadyToBuildModalClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
         {readyToBuildBody}
       </Modal>
@@ -563,6 +625,11 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         onClose={handleReadyToReleaseModalClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
         {readyToReleaseBody}
       </Modal>
@@ -571,7 +638,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
 }
 
 export const CARFCollapsibleTable = () => {
-  const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const classes = useRowStyles();
