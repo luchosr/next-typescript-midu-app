@@ -197,6 +197,7 @@ export default function TollgateDataGrid() {
         experimentalFeatures={{ columnGrouping: true }}
         rows={RTBrows}
         columns={preReqColums}
+        // @ts-ignore
         pageSize={5}
         rowsPerPageOptions={[5]}
         components={{

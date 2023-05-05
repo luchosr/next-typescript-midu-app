@@ -18,6 +18,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import EditIcon from "@material-ui/icons/Edit";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
@@ -60,7 +61,7 @@ const useRowStyles = makeStyles((theme: Theme) =>
       },
     },
     formControl: {
-      width: "60%",
+      width: "70%",
       display: "block",
     },
     selectEmpty: {
@@ -68,7 +69,7 @@ const useRowStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       position: "absolute",
-      width: "900px",
+      width: "750px",
       height: "550px",
       fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
       backgroundColor: theme.palette.background.paper,
@@ -128,7 +129,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           justifyContent: "space-between",
         }}
       >
-        <h2 id="simple-modal-title">Edit Ready to Build fields</h2>
+        <h2 id="simple-modal-title">Edit Ready to Build pre-requisites</h2>
         <span
           style={{ cursor: "pointer" }}
           onClick={handleReadyToBuildModalClose}
@@ -137,12 +138,12 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         </span>
       </div>
 
-      <form style={{ marginLeft: "100px", marginTop: "30px" }}>
+      <form style={{ marginLeft: "30px", marginTop: "30px" }}>
         <div
           style={{
             display: "flex",
             flexDirection: "row",
-            width: "70%",
+            width: "90%",
             marginBottom: "25px",
             justifyContent: "space-between",
           }}
@@ -154,10 +155,10 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             autoComplete="off"
             // helperText="Some important text"
             variant="outlined"
-            style={{ width: "60%" }}
+            style={{ width: "70%" }}
             // onChange={}
           />
-          <TextField
+          {/* <TextField
             id="solution-design-comment"
             label="Solution Design Comments"
             defaultValue="Hello I'm a Solution Design comment"
@@ -166,6 +167,11 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             variant="outlined"
             style={{ width: "35%" }}
             // onChange={}
+          /> */}
+          <TextareaAutosize
+            aria-label="empty textarea"
+            minRows={4}
+            placeholder="Empty"
           />
         </div>
 
@@ -182,7 +188,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           style={{
             display: "flex",
             flexDirection: "row",
-            width: "70%",
+            width: "90%",
             marginBottom: "25px",
             justifyContent: "space-between",
           }}
@@ -195,6 +201,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
               labelId="demo-simple-select-outlined-label"
               id="deployment-patterns"
               value={deploymentPatterns}
+              // @ts-ignore
               onChange={handleSelectChange}
               label="Deployment Patterns"
               inputProps={{
@@ -211,7 +218,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
               </MenuItem>
             </Select>
           </FormControl>
-          <TextField
+          {/* <TextField
             id="deployment-pattern-comment"
             label="Deployment Patterns Comments"
             defaultValue="Hello I'm a Deployment Patterns comment"
@@ -220,6 +227,11 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             variant="outlined"
             style={{ width: "35%" }}
             // onChange={}
+          /> */}
+          <TextareaAutosize
+            aria-label="empty textarea"
+            minRows={4}
+            placeholder="Empty"
           />
         </div>
 
@@ -230,7 +242,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           autoComplete="off"
           // helperText="Some important text"
           variant="outlined"
-          style={{ width: "42%", margin: "0px auto" }}
+          style={{ width: "63%", margin: "0px auto" }}
         />
 
         <div
@@ -271,7 +283,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           justifyContent: "space-between",
         }}
       >
-        <h2 id="simple-modal-title">Edit Ready to Release fields</h2>
+        <h2 id="simple-modal-title">Edit Ready to Release Pre-Requisites</h2>
         <span
           style={{ cursor: "pointer" }}
           onClick={handleReadyToReleaseModalClose}
@@ -280,27 +292,30 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         </span>
       </div>
 
-      <form style={{ marginLeft: "100px", marginTop: "30px" }}>
+      <form style={{ marginLeft: "20px", marginTop: "30px" }}>
         <div
           style={{
             display: "flex",
             flexDirection: "row",
-            width: "70%",
-            marginBottom: "25px",
+            width: "90%",
             justifyContent: "space-between",
+            marginBottom: "25px",
+            padding: "25px 15px 15px 15px",
+            border: "1px solid #4287f5",
+            borderRadius: 10,
           }}
         >
           <TextField
-            id="solution-design"
+            id="resiliency-measure-test-results"
             label="Resiliency Measure Test Results"
             defaultValue="www.urlGivenByUser.com"
             autoComplete="off"
             // helperText="Some important text"
             variant="outlined"
-            style={{ width: "60%" }}
+            style={{ width: "70%" }}
             // onChange={}
           />
-          <TextField
+          {/* <TextField
             id="solution-design-comment"
             label="Comments"
             defaultValue=""
@@ -309,15 +324,28 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             variant="outlined"
             style={{ width: "35%" }}
             // onChange={}
+          /> */}
+          <TextareaAutosize
+            aria-label="empty textarea"
+            minRows={3}
+            placeholder="Comment"
+            style={{
+              borderColor: "lightgray",
+              borderRadius: 5,
+              height: "50px",
+            }}
           />
         </div>
         <div
           style={{
             display: "flex",
             flexDirection: "row",
-            width: "70%",
+            width: "90%",
             marginBottom: "25px",
             justifyContent: "space-between",
+            padding: "25px 15px 15px 15px",
+            border: "1px solid #4287f5",
+            borderRadius: 10,
           }}
         >
           <TextField
@@ -327,30 +355,30 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             autoComplete="off"
             // helperText="Some important text"
             variant="outlined"
-            style={{ width: "60%" }}
+            style={{ width: "70%" }}
           />
 
-          <TextField
-            id="auditing-logging-monitoring-alerting-metrics"
-            label="Comments"
-            defaultValue=""
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "35%" }}
-            // onChange={}
+          <TextareaAutosize
+            aria-label="empty textarea"
+            minRows={4}
+            placeholder="Comment"
+            style={{
+              borderColor: "lightgray",
+              borderRadius: 5,
+              height: "50px",
+            }}
           />
         </div>
         <div
           style={{
             display: "flex",
             flexDirection: "row",
-            width: "70%",
+            width: "90%",
             marginBottom: "25px",
             justifyContent: "space-between",
-            // padding: 15,
-            // border: "1px solid #0B62DA",
-            // borderRadius: 15,
+            padding: "25px 15px 15px 15px",
+            border: "1px solid #4287f5",
+            borderRadius: 10,
           }}
         >
           <TextField
@@ -360,9 +388,9 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             autoComplete="off"
             // helperText="Some important text"
             variant="outlined"
-            style={{ width: "60%" }}
+            style={{ width: "70%" }}
           />
-          <TextField
+          {/* <TextField
             id="ekm-verification-evidencing-comment"
             label="Comments"
             defaultValue=""
@@ -370,6 +398,16 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             // helperText="Some important text"
             variant="outlined"
             style={{ width: "35%" }}
+          /> */}
+          <TextareaAutosize
+            aria-label="empty textarea"
+            minRows={4}
+            placeholder="Comment"
+            style={{
+              borderColor: "lightgray",
+              borderRadius: 5,
+              height: "50px",
+            }}
           />
         </div>
 
@@ -377,8 +415,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           style={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "flex-end",
-            marginRight: "30%",
+            justifyContent: "center",
+            // marginRight: "30%",
             marginTop: 50,
           }}
         >
