@@ -1,30 +1,30 @@
-import React from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { rows, createData, Fields } from "./mockedData";
-import Box from "@material-ui/core/Box";
-import Link from "@material-ui/core/Link";
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
-import InfoIcon from "@material-ui/icons/Info";
-import WatchLaterIcon from "@material-ui/icons/WatchLater";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Button from "@material-ui/core/Button";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import EditIcon from "@material-ui/icons/Edit";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import CancelIcon from "@material-ui/icons/Cancel";
-import CloseIcon from "@material-ui/icons/Close";
-import Paper from "@material-ui/core/Paper";
-import TablePagination from "@material-ui/core/TablePagination";
+import React from 'react';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { rows, createData, Fields } from './mockedData';
+import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import WatchLaterIcon from '@material-ui/icons/WatchLater';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import EditIcon from '@material-ui/icons/Edit';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
+import CloseIcon from '@material-ui/icons/Close';
+import Paper from '@material-ui/core/Paper';
+import TablePagination from '@material-ui/core/TablePagination';
 import {
   FormControl,
   InputLabel,
@@ -32,8 +32,8 @@ import {
   Modal,
   Select,
   TextField,
-} from "@mui/material";
-import { spawn } from "child_process";
+} from '@mui/material';
+import { spawn } from 'child_process';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -45,43 +45,43 @@ function getModalStyle() {
 
   return {
     top: `${top}%`,
-    margin: "auto",
+    margin: 'auto',
   };
 }
 const useRowStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      backgroundColor: "lime",
-      "& > *": {
-        borderBottom: "unset",
+      backgroundColor: 'lime',
+      '& > *': {
+        borderBottom: 'unset',
       },
-      "& .MuiTableRow-root": {
-        backgroundColor: "red",
+      '& .MuiTableRow-root': {
+        backgroundColor: 'red',
         marginLeft: 150,
       },
     },
     formControl: {
-      width: "70%",
-      display: "block",
+      width: '70%',
+      display: 'block',
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
     },
     paper: {
-      position: "absolute",
-      width: "750px",
-      height: "550px",
+      position: 'absolute',
+      width: '750px',
+      height: '550px',
       fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
       backgroundColor: theme.palette.background.paper,
-      border: "2px solid #000",
+      border: '2px solid #000',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
-      overflow: "auto",
+      overflow: 'auto',
     },
     deploymentPatternsSelect: {
-      margin: "30px",
+      margin: '30px',
     },
-    mainTableCell: { paddingLeft: 10, width: "80%" },
+    mainTableCell: { paddingLeft: 10, width: '80%' },
     dropdownIconButton: { marginRight: 10 },
   })
 );
@@ -93,7 +93,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
     React.useState(false);
   const [readyToReleaseModalOpen, setReadyToReleaseModalOpen] =
     React.useState(false);
-  const [deploymentPatterns, setDeploymentPatterns] = React.useState("yes");
+  const [deploymentPatterns, setDeploymentPatterns] = React.useState('yes');
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useRowStyles();
   const preventDefault = (event: React.SyntheticEvent) =>
@@ -124,38 +124,46 @@ function Row(props: { row: ReturnType<typeof createData> }) {
     <div style={modalStyle} className={classes.paper}>
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         }}
       >
-        <h2 id="simple-modal-title">Edit Ready to Build pre-requisites</h2>
+        <h2 id='simple-modal-title'>Edit Ready to Build pre-requisites</h2>
         <span
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
           onClick={handleReadyToBuildModalClose}
         >
           <CloseIcon />
         </span>
       </div>
 
-      <form style={{ marginLeft: "30px", marginTop: "30px" }}>
+      <form style={{ marginLeft: '30px', marginTop: '30px' }}>
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "90%",
-            marginBottom: "25px",
-            justifyContent: "space-between",
+            // display: "flex",
+            // flexDirection: "row",
+            // width: "90%",
+            // marginBottom: "25px",
+            // justifyContent: "space-between",
+            display: 'flex',
+            flexDirection: 'row',
+            width: '90%',
+            justifyContent: 'space-between',
+            marginBottom: '25px',
+            padding: '25px 15px 15px 15px',
+            border: '1px solid #4287f5',
+            borderRadius: 10,
           }}
         >
           <TextField
-            id="solution-design"
-            label="Solution Design"
-            defaultValue="www.google.com"
-            autoComplete="off"
+            id='solution-design'
+            label='Solution Design'
+            defaultValue='www.google.com'
+            autoComplete='off'
             // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "70%" }}
+            variant='outlined'
+            style={{ width: '70%' }}
             // onChange={}
           />
           {/* <TextField
@@ -169,9 +177,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             // onChange={}
           /> */}
           <TextareaAutosize
-            aria-label="empty textarea"
+            aria-label='empty textarea'
             minRows={4}
-            placeholder="Empty"
+            placeholder='Empty'
+            style={{
+              borderColor: 'lightgray',
+              borderRadius: 5,
+              height: '50px',
+            }}
           />
         </div>
 
@@ -186,33 +199,36 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         /> */}
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "90%",
-            marginBottom: "25px",
-            justifyContent: "space-between",
+            display: 'flex',
+            flexDirection: 'row',
+            width: '90%',
+            justifyContent: 'space-between',
+            marginBottom: '25px',
+            padding: '25px 15px 15px 15px',
+            border: '1px solid #4287f5',
+            borderRadius: 10,
           }}
         >
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel id="demo-simple-select-outlined-label">
+          <FormControl variant='outlined' className={classes.formControl}>
+            <InputLabel id='demo-simple-select-outlined-label'>
               Deployment Patterns
             </InputLabel>
             <Select
-              labelId="demo-simple-select-outlined-label"
-              id="deployment-patterns"
+              labelId='demo-simple-select-outlined-label'
+              id='deployment-patterns'
               value={deploymentPatterns}
               // @ts-ignore
               onChange={handleSelectChange}
-              label="Deployment Patterns"
+              label='Deployment Patterns'
               inputProps={{
                 deploymentPatterns: deploymentPatterns,
-                id: "outlined-age-native-simple",
+                id: 'outlined-age-native-simple',
               }}
             >
-              <MenuItem value={"yes"}>
+              <MenuItem value={'yes'}>
                 Yes - the design implements ALL relevant deployment patterns
               </MenuItem>
-              <MenuItem value={"no"}>
+              <MenuItem value={'no'}>
                 No - the design DOES NOT implement ALL of the deployment
                 patterns
               </MenuItem>
@@ -229,43 +245,49 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             // onChange={}
           /> */}
           <TextareaAutosize
-            aria-label="empty textarea"
+            aria-label='empty textarea'
             minRows={4}
-            placeholder="Empty"
+            placeholder='Empty'
+            style={{
+              borderColor: 'lightgray',
+              borderRadius: 5,
+              height: '50px',
+            }}
           />
         </div>
 
         <TextField
-          id="blueprint"
-          label="Blueprint"
-          defaultValue="waltz.intranet.db.com/waltz/...../NAR-ID"
-          autoComplete="off"
+          id='blueprint'
+          label='Blueprint'
+          defaultValue='waltz.intranet.db.com/waltz/...../NAR-ID'
+          autoComplete='off'
           // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "63%", margin: "0px auto" }}
+          variant='outlined'
+          style={{ width: '63%', margin: '0px auto' }}
         />
 
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            marginRight: "30%",
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            // marginRight: "30%",
+            marginRight: 50,
             marginTop: 50,
           }}
         >
           <Button
-            variant="contained"
-            style={{ margin: "0 20px" }}
-            color="primary"
+            variant='contained'
+            style={{ margin: '0 20px' }}
+            color='primary'
             // disabled={!linkUrl}
             onClick={handleReadyToBuildModalClose}
           >
             Save
           </Button>
           <Button
-            variant="contained"
-            style={{ backgroundColor: "#FFFF", color: "black" }}
+            variant='contained'
+            style={{ backgroundColor: '#FFFF', color: 'black' }}
             onClick={handleReadyToBuildModalClose}
           >
             Cancel
@@ -278,41 +300,41 @@ function Row(props: { row: ReturnType<typeof createData> }) {
     <div style={modalStyle} className={classes.paper}>
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         }}
       >
-        <h2 id="simple-modal-title">Edit Ready to Release Pre-Requisites</h2>
+        <h2 id='simple-modal-title'>Edit Ready to Release Pre-Requisites</h2>
         <span
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
           onClick={handleReadyToReleaseModalClose}
         >
           <CloseIcon />
         </span>
       </div>
 
-      <form style={{ marginLeft: "20px", marginTop: "30px" }}>
+      <form style={{ marginLeft: '20px', marginTop: '30px' }}>
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "90%",
-            justifyContent: "space-between",
-            marginBottom: "25px",
-            padding: "25px 15px 15px 15px",
-            border: "1px solid #4287f5",
+            display: 'flex',
+            flexDirection: 'row',
+            width: '90%',
+            justifyContent: 'space-between',
+            marginBottom: '25px',
+            padding: '25px 15px 15px 15px',
+            border: '1px solid #4287f5',
             borderRadius: 10,
           }}
         >
           <TextField
-            id="resiliency-measure-test-results"
-            label="Resiliency Measure Test Results"
-            defaultValue="www.urlGivenByUser.com"
-            autoComplete="off"
+            id='resiliency-measure-test-results'
+            label='Resiliency Measure Test Results'
+            defaultValue='www.urlGivenByUser.com'
+            autoComplete='off'
             // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "70%" }}
+            variant='outlined'
+            style={{ width: '70%' }}
             // onChange={}
           />
           {/* <TextField
@@ -326,69 +348,69 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             // onChange={}
           /> */}
           <TextareaAutosize
-            aria-label="empty textarea"
+            aria-label='empty textarea'
             minRows={3}
-            placeholder="Comment"
+            placeholder='Comment'
             style={{
-              borderColor: "lightgray",
+              borderColor: 'lightgray',
               borderRadius: 5,
-              height: "50px",
+              height: '50px',
             }}
           />
         </div>
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "90%",
-            marginBottom: "25px",
-            justifyContent: "space-between",
-            padding: "25px 15px 15px 15px",
-            border: "1px solid #4287f5",
+            display: 'flex',
+            flexDirection: 'row',
+            width: '90%',
+            marginBottom: '25px',
+            justifyContent: 'space-between',
+            padding: '25px 15px 15px 15px',
+            border: '1px solid #4287f5',
             borderRadius: 10,
           }}
         >
           <TextField
-            id="cloud-product-registration"
-            label="Auditing, Logging, Monitoring, Alerting Metrics"
-            defaultValue="www.urlGivenByUser.com"
-            autoComplete="off"
+            id='cloud-product-registration'
+            label='Auditing, Logging, Monitoring, Alerting Metrics'
+            defaultValue='www.urlGivenByUser.com'
+            autoComplete='off'
             // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "70%" }}
+            variant='outlined'
+            style={{ width: '70%' }}
           />
 
           <TextareaAutosize
-            aria-label="empty textarea"
+            aria-label='empty textarea'
             minRows={4}
-            placeholder="Comment"
+            placeholder='Comment'
             style={{
-              borderColor: "lightgray",
+              borderColor: 'lightgray',
               borderRadius: 5,
-              height: "50px",
+              height: '50px',
             }}
           />
         </div>
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "90%",
-            marginBottom: "25px",
-            justifyContent: "space-between",
-            padding: "25px 15px 15px 15px",
-            border: "1px solid #4287f5",
+            display: 'flex',
+            flexDirection: 'row',
+            width: '90%',
+            marginBottom: '25px',
+            justifyContent: 'space-between',
+            padding: '25px 15px 15px 15px',
+            border: '1px solid #4287f5',
             borderRadius: 10,
           }}
         >
           <TextField
-            id="ekm-verification-evidencing"
-            label="EKM Verification & Evidencing"
-            defaultValue="www.urlGivenByUser.com"
-            autoComplete="off"
+            id='ekm-verification-evidencing'
+            label='EKM Verification & Evidencing'
+            defaultValue='www.urlGivenByUser.com'
+            autoComplete='off'
             // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "70%" }}
+            variant='outlined'
+            style={{ width: '70%' }}
           />
           {/* <TextField
             id="ekm-verification-evidencing-comment"
@@ -400,38 +422,39 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             style={{ width: "35%" }}
           /> */}
           <TextareaAutosize
-            aria-label="empty textarea"
+            aria-label='empty textarea'
             minRows={4}
-            placeholder="Comment"
+            placeholder='Comment'
             style={{
-              borderColor: "lightgray",
+              borderColor: 'lightgray',
               borderRadius: 5,
-              height: "50px",
+              height: '50px',
             }}
           />
         </div>
 
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
             // marginRight: "30%",
+            marginRight: 50,
             marginTop: 50,
           }}
         >
           <Button
-            variant="contained"
-            style={{ margin: "0 20px" }}
-            color="primary"
+            variant='contained'
+            style={{ margin: '0 20px' }}
+            color='primary'
             // disabled={!linkUrl}
             onClick={handleReadyToReleaseModalClose}
           >
             Save
           </Button>
           <Button
-            variant="contained"
-            style={{ backgroundColor: "#FFFF", color: "black" }}
+            variant='contained'
+            style={{ backgroundColor: '#FFFF', color: 'black' }}
             onClick={handleReadyToReleaseModalClose}
           >
             Cancel
@@ -446,196 +469,196 @@ function Row(props: { row: ReturnType<typeof createData> }) {
     fields: Fields[];
     history: { date: string; customerId: string; amount: number }[];
   }): void {
-    throw new Error("Function not implemented.");
+    throw new Error('Function not implemented.');
   }
 
   return (
     <React.Fragment>
-      <TableRow style={{ backgroundColor: "#29B6F61A" }}>
+      <TableRow style={{ backgroundColor: '#29B6F61A' }}>
         <TableCell className={classes.mainTableCell}>
           <IconButton
-            aria-label="expand row"
-            size="small"
+            aria-label='expand row'
+            size='small'
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className={classes.dropdownIconButton}
           >
             {dropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
           </IconButton>
           {row.name}
-          {row.name === "Ready to Build" && (
+          {row.name === 'Ready to Build' && (
             <Button
-              variant="text"
+              variant='text'
               onClick={() => handleReadyToBuildModalOpen()}
               style={{
-                textTransform: "capitalize",
-                fontSize: "12px",
-                marginLeft: "10px",
+                textTransform: 'capitalize',
+                fontSize: '12px',
+                marginLeft: '10px',
               }}
             >
-              <EditIcon style={{ marginRight: "5px" }} /> Edit
+              <EditIcon style={{ marginRight: '5px' }} /> Edit
             </Button>
           )}
-          {row.name === "Ready to Release" && (
+          {row.name === 'Ready to Release' && (
             <Button
-              variant="text"
+              variant='text'
               onClick={() => handleReadyToReleaseModalOpen()}
               style={{
-                textTransform: "capitalize",
-                fontSize: "12px",
-                marginLeft: "10px",
+                textTransform: 'capitalize',
+                fontSize: '12px',
+                marginLeft: '10px',
               }}
             >
-              <EditIcon style={{ marginRight: "5px" }} /> Edit
+              <EditIcon style={{ marginRight: '5px' }} /> Edit
             </Button>
           )}
         </TableCell>
 
         <TableCell
-          align="right"
+          align='right'
           style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-around",
-            padding: "15px 8px 0px",
-            borderBottom: "none",
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            padding: '15px 8px 0px',
+            borderBottom: 'none',
           }}
         >
           <Button
-            variant="contained"
+            variant='contained'
             disabled={true}
             // onClick={() => handleOpen()}
             style={{
-              textTransform: "capitalize",
-              fontSize: "12px",
+              textTransform: 'capitalize',
+              fontSize: '12px',
               // backgroundColor: "#0B62DA",
               // color: "#FFFFFF",
             }}
           >
-            <CheckCircleOutlineIcon style={{ marginRight: "5px" }} /> Submit
+            <CheckCircleOutlineIcon style={{ marginRight: '5px' }} /> Submit
           </Button>
         </TableCell>
-        <TableCell align="right"></TableCell>
-        <TableCell align="right"></TableCell>
+        <TableCell align='right'></TableCell>
+        <TableCell align='right'></TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={dropdownOpen} timeout="auto" unmountOnExit>
+          <Collapse in={dropdownOpen} timeout='auto' unmountOnExit>
             <Box margin={1}>
-              <Table size="small" aria-label="purchases">
-                <TableHead style={{ backgroundColor: "#EDEFF2" }}>
+              <Table size='small' aria-label='purchases'>
+                <TableHead style={{ backgroundColor: '#EDEFF2' }}>
                   <TableRow>
-                    <TableCell align="left">Pre-Requisite</TableCell>
-                    <TableCell align="left">Status</TableCell>
-                    <TableCell align="left">Rationale</TableCell>
-                    <TableCell align="left">Label</TableCell>
+                    <TableCell align='left'>Pre-Requisite</TableCell>
+                    <TableCell align='left'>Status</TableCell>
+                    <TableCell align='left'>Rationale</TableCell>
+                    <TableCell align='left'>Label</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody style={{ marginLeft: 55 }}>
                   {row.fields.map((field) => (
                     <TableRow key={field?.name}>
                       <TableCell
-                        align="left"
-                        component="th"
-                        scope="row"
-                        style={{ width: "33%" }}
+                        align='left'
+                        component='th'
+                        scope='row'
+                        style={{ width: '33%' }}
                       >
-                        <Link href="#" onClick={preventDefault}>
+                        <Link href='#' onClick={preventDefault}>
                           {field?.name}
                         </Link>
                       </TableCell>
-                      <TableCell align="left">
-                        {field.status === "Self Served" && (
+                      <TableCell align='left'>
+                        {field.status === 'Self Served' && (
                           <span
                             style={{
-                              color: "#0A7CB5",
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
+                              color: '#0A7CB5',
+                              display: 'flex',
+                              flexDirection: 'row',
+                              alignItems: 'center',
                             }}
                           >
                             <InfoIcon
                               style={{
-                                marginRight: "5px",
+                                marginRight: '5px',
                               }}
                             />
                             {field.status}
                           </span>
                         )}
-                        {field.status === "Completed" && (
+                        {field.status === 'Completed' && (
                           <span
                             style={{
-                              color: "#01579B",
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
+                              color: '#01579B',
+                              display: 'flex',
+                              flexDirection: 'row',
+                              alignItems: 'center',
                             }}
                           >
                             <CheckCircleIcon
                               style={{
-                                marginRight: "5px",
+                                marginRight: '5px',
                               }}
                             />
                             {field.status}
                           </span>
                         )}
 
-                        {field.status === "Not required" && (
+                        {field.status === 'Not required' && (
                           <span
                             style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
+                              display: 'flex',
+                              flexDirection: 'row',
+                              alignItems: 'center',
                             }}
                           >
                             <CancelIcon
                               style={{
-                                marginRight: "5px",
+                                marginRight: '5px',
                               }}
                             />
                             {field.status}
                           </span>
                         )}
-                        {field.status === "In progress" && (
+                        {field.status === 'In progress' && (
                           <span
                             style={{
-                              color: "#FFAA00",
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
+                              color: '#FFAA00',
+                              display: 'flex',
+                              flexDirection: 'row',
+                              alignItems: 'center',
                             }}
                           >
                             <PlayCircleFilledIcon
                               style={{
-                                marginRight: "5px",
+                                marginRight: '5px',
                               }}
                             />
                             {field.status}
                           </span>
                         )}
-                        {field.status === "Not started" && (
+                        {field.status === 'Not started' && (
                           <span
                             style={{
-                              color: "#8894A8",
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
+                              color: '#8894A8',
+                              display: 'flex',
+                              flexDirection: 'row',
+                              alignItems: 'center',
                             }}
                           >
                             <WatchLaterIcon
                               style={{
-                                marginRight: "5px",
+                                marginRight: '5px',
                               }}
                             />
                             {field.status}
                           </span>
                         )}
                       </TableCell>
-                      <TableCell align="left" style={{ overflow: "hidden" }}>
+                      <TableCell align='left' style={{ overflow: 'hidden' }}>
                         {field?.rationale}
                       </TableCell>
                       <TableCell
-                        align="left"
-                        style={{ overflow: "hidden", width: "300px" }}
+                        align='left'
+                        style={{ overflow: 'hidden', width: '300px' }}
                       ></TableCell>
                     </TableRow>
                   ))}
@@ -648,12 +671,12 @@ function Row(props: { row: ReturnType<typeof createData> }) {
       <Modal
         open={readyToBuildModalOpen}
         onClose={handleReadyToBuildModalClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        aria-labelledby='simple-modal-title'
+        aria-describedby='simple-modal-description'
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         {readyToBuildBody}
@@ -661,12 +684,12 @@ function Row(props: { row: ReturnType<typeof createData> }) {
       <Modal
         open={readyToReleaseModalOpen}
         onClose={handleReadyToReleaseModalClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        aria-labelledby='simple-modal-title'
+        aria-describedby='simple-modal-description'
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         {readyToReleaseBody}
@@ -696,7 +719,7 @@ export const CARFCollapsibleTable = () => {
   };
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table aria-label='collapsible table'>
         <TableBody>
           {rows.map((row) => (
             <Row key={row.name} row={row} />
@@ -705,7 +728,7 @@ export const CARFCollapsibleTable = () => {
       </Table>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
-        component="div"
+        component='div'
         count={rows.length}
         rowsPerPage={rowsPerPage}
         page={page}
