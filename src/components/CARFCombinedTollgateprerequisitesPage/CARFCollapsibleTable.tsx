@@ -33,7 +33,6 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import { spawn } from 'child_process';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -234,16 +233,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
               </MenuItem>
             </Select>
           </FormControl>
-          {/* <TextField
-            id="deployment-pattern-comment"
-            label="Deployment Patterns Comments"
-            defaultValue="Hello I'm a Deployment Patterns comment"
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "35%" }}
-            // onChange={}
-          /> */}
+
           <TextareaAutosize
             aria-label='empty textarea'
             minRows={4}
@@ -271,7 +261,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
-            // marginRight: "30%",
             marginRight: 50,
             marginTop: 50,
           }}
@@ -296,6 +285,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
       </form>
     </div>
   );
+
   const readyToReleaseBody = (
     <div style={modalStyle} className={classes.paper}>
       <div
@@ -337,16 +327,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             style={{ width: '70%' }}
             // onChange={}
           />
-          {/* <TextField
-            id="solution-design-comment"
-            label="Comments"
-            defaultValue=""
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "35%" }}
-            // onChange={}
-          /> */}
           <TextareaAutosize
             aria-label='empty textarea'
             minRows={3}
@@ -412,15 +392,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             variant='outlined'
             style={{ width: '70%' }}
           />
-          {/* <TextField
-            id="ekm-verification-evidencing-comment"
-            label="Comments"
-            defaultValue=""
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "35%" }}
-          /> */}
+
           <TextareaAutosize
             aria-label='empty textarea'
             minRows={4}
