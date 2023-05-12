@@ -7,6 +7,7 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
+import DoneAllIcon from "@material-ui/icons/DoneAll";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -34,6 +35,7 @@ import {
   TextField,
 } from "@mui/material";
 import { spawn } from "child_process";
+import { Done } from "@mui/icons-material";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -70,7 +72,7 @@ const useRowStyles = makeStyles((theme: Theme) =>
     paper: {
       position: "absolute",
       width: "750px",
-      height: "550px",
+      height: "350px",
       fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
@@ -88,11 +90,14 @@ const useRowStyles = makeStyles((theme: Theme) =>
 
 function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
+  const [fieldToEdit, setFieldToEdit] = React.useState("");
+  const [editionSuccess, setEditionSuccess] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [readyToBuildModalOpen, setReadyToBuildModalOpen] =
     React.useState(false);
   const [readyToReleaseModalOpen, setReadyToReleaseModalOpen] =
     React.useState(false);
+  const [conditionalModalOpen, setConditionalModalOpen] = React.useState(false);
   const [deploymentPatterns, setDeploymentPatterns] = React.useState("yes");
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useRowStyles();
@@ -107,12 +112,23 @@ function Row(props: { row: ReturnType<typeof createData> }) {
     setReadyToBuildModalOpen(false);
   };
 
+  const handleEdition = () => {
+    setEditionSuccess(!editionSuccess);
+  };
+  const handleConditionalModalOpen = (editingField: string) => {
+    setFieldToEdit(editingField);
+    setConditionalModalOpen(true);
+    setEditionSuccess(false);
+  };
   const handleReadyToReleaseModalOpen = () => {
     setReadyToReleaseModalOpen(true);
   };
 
   const handleReadyToReleaseModalClose = () => {
     setReadyToReleaseModalOpen(false);
+  };
+  const handleConditionalModalClose = () => {
+    setConditionalModalOpen(false);
   };
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -440,6 +456,147 @@ function Row(props: { row: ReturnType<typeof createData> }) {
       </form>
     </div>
   );
+  const conditionalBody = (
+    <div style={modalStyle} className={classes.paper}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <h2 id="simple-modal-title">Edit {fieldToEdit}</h2>
+        <span
+          style={{ cursor: "pointer" }}
+          onClick={handleConditionalModalClose}
+        >
+          <CloseIcon />
+        </span>
+      </div>
+
+      <form style={{ marginLeft: "20px", marginTop: "30px" }}>
+        {editionSuccess === false ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: "90%",
+              justifyContent: "space-between",
+              marginBottom: "25px",
+              padding: "25px 15px 15px 15px",
+              // border: "1px solid #4287f5",
+              borderRadius: 10,
+            }}
+          >
+            {" "}
+            {fieldToEdit === "Deployment Patterns" ? (
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel id="demo-simple-select-outlined-label">
+                  Deployment Patterns
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="deployment-patterns"
+                  value={deploymentPatterns}
+                  // @ts-ignore
+                  onChange={handleSelectChange}
+                  label="Deployment Patterns"
+                  inputProps={{
+                    deploymentPatterns: deploymentPatterns,
+                    id: "outlined-age-native-simple",
+                  }}
+                >
+                  <MenuItem value={"yes"}>
+                    Yes - the design implements ALL relevant deployment patterns
+                  </MenuItem>
+                  <MenuItem value={"no"}>
+                    No - the design DOES NOT implement ALL of the deployment
+                    patterns
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            ) : (
+              <TextField
+                id={fieldToEdit}
+                label={fieldToEdit}
+                defaultValue="www.urlGivenByUser.com"
+                autoComplete="off"
+                // helperText="Some important text"
+                variant="outlined"
+                style={{ width: "70%" }}
+              />
+            )}
+            {fieldToEdit === "Blueprint" ? null : (
+              <TextareaAutosize
+                aria-label="empty textarea"
+                minRows={4}
+                placeholder="Comment"
+                style={{
+                  borderColor: "lightgray",
+                  borderRadius: 5,
+                  height: "50px",
+                }}
+              />
+            )}
+            {/* {`Hello, here is the  modal`} */}
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            Edition successful <DoneAllIcon />
+          </div>
+        )}
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            // marginRight: "30%",
+            marginTop: 50,
+          }}
+        >
+          {editionSuccess === false ? (
+            <>
+              <Button
+                variant="contained"
+                style={{ margin: "0 20px" }}
+                color="primary"
+                // disabled={!linkUrl}
+                onClick={handleEdition}
+              >
+                Save
+              </Button>
+              <Button
+                variant="contained"
+                style={{ backgroundColor: "#FFFF", color: "black" }}
+                onClick={handleReadyToReleaseModalClose}
+              >
+                Cancel
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="contained"
+              style={{ margin: "0 20px" }}
+              color="primary"
+              // disabled={!linkUrl}
+              onClick={handleConditionalModalClose}
+            >
+              Close
+            </Button>
+          )}
+        </div>
+      </form>
+    </div>
+  );
 
   function handleClick(row: {
     name: string;
@@ -462,7 +619,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             {dropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
           </IconButton>
           {row.name}
-          {row.name === "Ready to Build" && (
+          {/* {row.name === "Ready to Build" && (
             <Button
               variant="text"
               onClick={() => handleReadyToBuildModalOpen()}
@@ -474,8 +631,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             >
               <EditIcon style={{ marginRight: "5px" }} /> Edit
             </Button>
-          )}
-          {row.name === "Ready to Release" && (
+          )} */}
+          {/* {row.name === "Ready to Release" && (
             <Button
               variant="text"
               onClick={() => handleReadyToReleaseModalOpen()}
@@ -487,7 +644,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             >
               <EditIcon style={{ marginRight: "5px" }} /> Edit
             </Button>
-          )}
+          )} */}
         </TableCell>
 
         <TableCell
@@ -499,7 +656,9 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             padding: "15px 8px 0px",
             borderBottom: "none",
           }}
-        >
+        ></TableCell>
+        <TableCell align="right"></TableCell>
+        <TableCell align="right">
           <Button
             variant="contained"
             disabled={true}
@@ -507,15 +666,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             style={{
               textTransform: "capitalize",
               fontSize: "12px",
+              margin: 0,
               // backgroundColor: "#0B62DA",
               // color: "#FFFFFF",
             }}
           >
-            <CheckCircleOutlineIcon style={{ marginRight: "5px" }} /> Submit
+            Submit
           </Button>
         </TableCell>
-        <TableCell align="right"></TableCell>
-        <TableCell align="right"></TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -537,8 +695,40 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         align="left"
                         component="th"
                         scope="row"
-                        style={{ width: "33%" }}
+                        style={{ width: "33%", padding: 0 }}
                       >
+                        {field?.name === "Solution Design" ||
+                        field?.name === "Deployment Patterns" ||
+                        field?.name === "Blueprint" ||
+                        field?.name === "Resiliency Measure Test Results" ||
+                        field?.name ===
+                          "Auditing, Logging, Monitoring, Alerting Metrics" ||
+                        field?.name === "EKM Verification & Evidencing" ||
+                        field?.name ===
+                          "Cloud Product Registration & Cloud Product Check" ? (
+                          <Button
+                            variant="text"
+                            // onClick={() => handleReadyToReleaseModalOpen()}
+                            onClick={() =>
+                              handleConditionalModalOpen(field.name)
+                            }
+                            style={{
+                              textTransform: "capitalize",
+                              fontSize: "12px",
+                              marginRight: "30px",
+                            }}
+                          >
+                            <EditIcon style={{ marginRight: "5px" }} /> Edit
+                          </Button>
+                        ) : (
+                          <div
+                            style={{
+                              display: "inline",
+
+                              marginLeft: "95px",
+                            }}
+                          ></div>
+                        )}
                         <Link href="#" onClick={preventDefault}>
                           {field?.name}
                         </Link>
@@ -670,6 +860,19 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         }}
       >
         {readyToReleaseBody}
+      </Modal>
+      <Modal
+        open={conditionalModalOpen}
+        onClose={handleConditionalModalClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {conditionalBody}
       </Modal>
     </React.Fragment>
   );

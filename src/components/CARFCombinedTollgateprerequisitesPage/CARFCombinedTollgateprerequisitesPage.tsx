@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
     margin: {
       margin: theme.spacing(1),
     },
-    supportbutton: {
+    supportButton: {
       height: "40px",
       width: "120px",
       margin: "20px 0px 0px 20px",
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
     tabsWrapper: {
       display: "flex",
     },
-    summaryAccordeon: { width: "100%", margin: "50px 0px 50px 0px" },
+    summaryAccordion: { width: "100%", margin: "50px 0px 50px 0px" },
     withoutLabel: {
       marginTop: theme.spacing(3),
     },
@@ -173,12 +173,12 @@ export default function InputAdornments() {
               }
             />
           </FormControl>
-          <button className={classes.supportbutton}>
+          <button className={classes.supportButton}>
             {/* <SupportButton /> */}
           </button>
         </div>
       </div>
-      <Accordion className={classes.summaryAccordeon}>
+      <Accordion className={classes.summaryAccordion}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -200,11 +200,10 @@ export default function InputAdornments() {
                 flexDirection: "row",
               }}
             >
-              {" "}
               <h3 style={{ marginRight: "100px", marginLeft: "35px" }}>
                 <ApplicationCharacteristicsIcon /> Application Characteristics
               </h3>
-              <h3 style={{ marginLeft: 180 }}>
+              <h3 style={{ marginLeft: "15%" }}>
                 <PreRequisitesStatusIcon /> Pre-Requisites Status
               </h3>
             </div>
@@ -244,8 +243,9 @@ export default function InputAdornments() {
                   <li>Not UK Important Business Service</li>
                 </ul>
               </div>
-
-              <CARFStackedBarChart />
+              <div style={{ width: "100%" }}>
+                <CARFStackedBarChart />
+              </div>
             </div>
           </Typography>
         </AccordionDetails>

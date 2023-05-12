@@ -1,5 +1,6 @@
 import { GridColDef, GridColumnGroupingModel } from "@mui/x-data-grid";
 import Link from "@material-ui/core/Link";
+
 export const preReqColumns: GridColDef[] = [
   {
     field: "applicationName",
@@ -79,6 +80,7 @@ export const preReqColumns: GridColDef[] = [
     headerName: "Solution Design",
     width: 150,
     headerClassName: "readyToBuild-header",
+    // @ts-ignore
     renderCell: (params) => <Link href="#">{params.value}</Link>,
   },
   {

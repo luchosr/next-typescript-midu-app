@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   BarChart,
   Bar,
@@ -9,35 +9,35 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 const data = [
   {
-    name: 'Ready to Design',
+    name: "Ready to Design",
     completed: 100,
-    ['not started']: 0,
-    ['in progress']: 0,
+    ["not started"]: 0,
+    ["in progress"]: 0,
     amt: 100,
   },
   {
-    name: 'Ready to Build',
+    name: "Ready to Build",
     completed: 34,
-    ['not started']: 33,
-    ['in progress']: 33,
+    ["not started"]: 33,
+    ["in progress"]: 33,
     amt: 100,
   },
   {
-    name: 'Ready to Release',
+    name: "Ready to Release",
     completed: 0,
-    ['not started']: 100,
-    ['in progress']: 0,
+    ["not started"]: 100,
+    ["in progress"]: 0,
     amt: 100,
   },
 ];
 
 export const CARFStackedBarChart = () => {
   return (
-    <ResponsiveContainer width={600} height={250}>
+    <ResponsiveContainer width="100%" height={300}>
       <BarChart
         data={data}
         margin={{
