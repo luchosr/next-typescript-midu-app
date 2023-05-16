@@ -8,7 +8,7 @@ import {
   GridToolbarExport,
   GridToolbarFilterButton,
   GridValueGetterParams,
-} from "@mui/x-data-grid";
+} from "@material-ui/data-grid";
 
 export const RTRcolumns: GridColDef[] = [
   {

@@ -136,326 +136,326 @@ function Row(props: { row: ReturnType<typeof createData> }) {
     setDeploymentPatterns(deploymentPatternsSelect);
   };
 
-  const readyToBuildBody = (
-    <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <h2 id="simple-modal-title">Edit Ready to Build pre-requisites</h2>
-        <span
-          style={{ cursor: "pointer" }}
-          onClick={handleReadyToBuildModalClose}
-        >
-          <CloseIcon />
-        </span>
-      </div>
+  // const readyToBuildBody = (
+  //   <div style={modalStyle} className={classes.paper}>
+  //     <div
+  //       style={{
+  //         display: "flex",
+  //         flexDirection: "row",
+  //         justifyContent: "space-between",
+  //       }}
+  //     >
+  //       <h2 id="simple-modal-title">Edit Ready to Build pre-requisites</h2>
+  //       <span
+  //         style={{ cursor: "pointer" }}
+  //         onClick={handleReadyToBuildModalClose}
+  //       >
+  //         <CloseIcon />
+  //       </span>
+  //     </div>
 
-      <form style={{ marginLeft: "30px", marginTop: "30px" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "90%",
-            marginBottom: "25px",
-            justifyContent: "space-between",
-          }}
-        >
-          <TextField
-            id="solution-design"
-            label="Solution Design"
-            defaultValue="www.google.com"
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "70%" }}
-            // onChange={}
-          />
-          {/* <TextField
-            id="solution-design-comment"
-            label="Solution Design Comments"
-            defaultValue="Hello I'm a Solution Design comment"
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "35%" }}
-            // onChange={}
-          /> */}
-          <TextareaAutosize
-            aria-label="empty textarea"
-            minRows={4}
-            placeholder="Empty"
-          />
-        </div>
+  //     <form style={{ marginLeft: "30px", marginTop: "30px" }}>
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           flexDirection: "row",
+  //           width: "90%",
+  //           marginBottom: "25px",
+  //           justifyContent: "space-between",
+  //         }}
+  //       >
+  //         <TextField
+  //           id="solution-design"
+  //           label="Solution Design"
+  //           defaultValue="www.google.com"
+  //           autoComplete="off"
+  //           // helperText="Some important text"
+  //           variant="outlined"
+  //           style={{ width: "70%" }}
+  //           // onChange={}
+  //         />
+  //         {/* <TextField
+  //           id="solution-design-comment"
+  //           label="Solution Design Comments"
+  //           defaultValue="Hello I'm a Solution Design comment"
+  //           autoComplete="off"
+  //           // helperText="Some important text"
+  //           variant="outlined"
+  //           style={{ width: "35%" }}
+  //           // onChange={}
+  //         /> */}
+  //         <TextareaAutosize
+  //           aria-label="empty textarea"
+  //           minRows={4}
+  //           placeholder="Empty"
+  //         />
+  //       </div>
 
-        {/* <TextField
-          id="cloud-product-registration"
-          label="Cloud Product Registration & Cloud Product Check"
-          defaultValue="Cloud Product Registration page in Backstage"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "80%", marginBottom: "30px" }}
-        /> */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "90%",
-            marginBottom: "25px",
-            justifyContent: "space-between",
-          }}
-        >
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel id="demo-simple-select-outlined-label">
-              Deployment Patterns
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-outlined-label"
-              id="deployment-patterns"
-              value={deploymentPatterns}
-              // @ts-ignore
-              onChange={handleSelectChange}
-              label="Deployment Patterns"
-              inputProps={{
-                deploymentPatterns: deploymentPatterns,
-                id: "outlined-age-native-simple",
-              }}
-            >
-              <MenuItem value={"yes"}>
-                Yes - the design implements ALL relevant deployment patterns
-              </MenuItem>
-              <MenuItem value={"no"}>
-                No - the design DOES NOT implement ALL of the deployment
-                patterns
-              </MenuItem>
-            </Select>
-          </FormControl>
-          {/* <TextField
-            id="deployment-pattern-comment"
-            label="Deployment Patterns Comments"
-            defaultValue="Hello I'm a Deployment Patterns comment"
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "35%" }}
-            // onChange={}
-          /> */}
-          <TextareaAutosize
-            aria-label="empty textarea"
-            minRows={4}
-            placeholder="Empty"
-          />
-        </div>
+  //       {/* <TextField
+  //         id="cloud-product-registration"
+  //         label="Cloud Product Registration & Cloud Product Check"
+  //         defaultValue="Cloud Product Registration page in Backstage"
+  //         autoComplete="off"
+  //         // helperText="Some important text"
+  //         variant="outlined"
+  //         style={{ width: "80%", marginBottom: "30px" }}
+  //       /> */}
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           flexDirection: "row",
+  //           width: "90%",
+  //           marginBottom: "25px",
+  //           justifyContent: "space-between",
+  //         }}
+  //       >
+  //         <FormControl variant="outlined" className={classes.formControl}>
+  //           <InputLabel id="demo-simple-select-outlined-label">
+  //             Deployment Patterns
+  //           </InputLabel>
+  //           <Select
+  //             labelId="demo-simple-select-outlined-label"
+  //             id="deployment-patterns"
+  //             value={deploymentPatterns}
+  //             // @ts-ignore
+  //             onChange={handleSelectChange}
+  //             label="Deployment Patterns"
+  //             inputProps={{
+  //               deploymentPatterns: deploymentPatterns,
+  //               id: "outlined-age-native-simple",
+  //             }}
+  //           >
+  //             <MenuItem value={"yes"}>
+  //               Yes - the design implements ALL relevant deployment patterns
+  //             </MenuItem>
+  //             <MenuItem value={"no"}>
+  //               No - the design DOES NOT implement ALL of the deployment
+  //               patterns
+  //             </MenuItem>
+  //           </Select>
+  //         </FormControl>
+  //         {/* <TextField
+  //           id="deployment-pattern-comment"
+  //           label="Deployment Patterns Comments"
+  //           defaultValue="Hello I'm a Deployment Patterns comment"
+  //           autoComplete="off"
+  //           // helperText="Some important text"
+  //           variant="outlined"
+  //           style={{ width: "35%" }}
+  //           // onChange={}
+  //         /> */}
+  //         <TextareaAutosize
+  //           aria-label="empty textarea"
+  //           minRows={4}
+  //           placeholder="Empty"
+  //         />
+  //       </div>
 
-        <TextField
-          id="blueprint"
-          label="Blueprint"
-          defaultValue="waltz.intranet.db.com/waltz/...../NAR-ID"
-          autoComplete="off"
-          // helperText="Some important text"
-          variant="outlined"
-          style={{ width: "63%", margin: "0px auto" }}
-        />
+  //       <TextField
+  //         id="blueprint"
+  //         label="Blueprint"
+  //         defaultValue="waltz.intranet.db.com/waltz/...../NAR-ID"
+  //         autoComplete="off"
+  //         // helperText="Some important text"
+  //         variant="outlined"
+  //         style={{ width: "63%", margin: "0px auto" }}
+  //       />
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            marginRight: "30%",
-            marginTop: 50,
-          }}
-        >
-          <Button
-            variant="contained"
-            style={{ margin: "0 20px" }}
-            color="primary"
-            // disabled={!linkUrl}
-            onClick={handleReadyToBuildModalClose}
-          >
-            Save
-          </Button>
-          <Button
-            variant="contained"
-            style={{ backgroundColor: "#FFFF", color: "black" }}
-            onClick={handleReadyToBuildModalClose}
-          >
-            Cancel
-          </Button>
-        </div>
-      </form>
-    </div>
-  );
-  const readyToReleaseBody = (
-    <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <h2 id="simple-modal-title">Edit Ready to Release Pre-Requisites</h2>
-        <span
-          style={{ cursor: "pointer" }}
-          onClick={handleReadyToReleaseModalClose}
-        >
-          <CloseIcon />
-        </span>
-      </div>
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           flexDirection: "row",
+  //           justifyContent: "flex-end",
+  //           marginRight: "30%",
+  //           marginTop: 50,
+  //         }}
+  //       >
+  //         <Button
+  //           variant="contained"
+  //           style={{ margin: "0 20px" }}
+  //           color="primary"
+  //           // disabled={!linkUrl}
+  //           onClick={handleReadyToBuildModalClose}
+  //         >
+  //           Save
+  //         </Button>
+  //         <Button
+  //           variant="contained"
+  //           style={{ backgroundColor: "#FFFF", color: "black" }}
+  //           onClick={handleReadyToBuildModalClose}
+  //         >
+  //           Cancel
+  //         </Button>
+  //       </div>
+  //     </form>
+  //   </div>
+  // );
+  // const readyToReleaseBody = (
+  //   <div style={modalStyle} className={classes.paper}>
+  //     <div
+  //       style={{
+  //         display: "flex",
+  //         flexDirection: "row",
+  //         justifyContent: "space-between",
+  //       }}
+  //     >
+  //       <h2 id="simple-modal-title">Edit Ready to Release Pre-Requisites</h2>
+  //       <span
+  //         style={{ cursor: "pointer" }}
+  //         onClick={handleReadyToReleaseModalClose}
+  //       >
+  //         <CloseIcon />
+  //       </span>
+  //     </div>
 
-      <form style={{ marginLeft: "20px", marginTop: "30px" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "90%",
-            justifyContent: "space-between",
-            marginBottom: "25px",
-            padding: "25px 15px 15px 15px",
-            border: "1px solid #4287f5",
-            borderRadius: 10,
-          }}
-        >
-          <TextField
-            id="resiliency-measure-test-results"
-            label="Resiliency Measure Test Results"
-            defaultValue="www.urlGivenByUser.com"
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "70%" }}
-            // onChange={}
-          />
-          {/* <TextField
-            id="solution-design-comment"
-            label="Comments"
-            defaultValue=""
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "35%" }}
-            // onChange={}
-          /> */}
-          <TextareaAutosize
-            aria-label="empty textarea"
-            minRows={3}
-            placeholder="Comment"
-            style={{
-              borderColor: "lightgray",
-              borderRadius: 5,
-              height: "50px",
-            }}
-          />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "90%",
-            marginBottom: "25px",
-            justifyContent: "space-between",
-            padding: "25px 15px 15px 15px",
-            border: "1px solid #4287f5",
-            borderRadius: 10,
-          }}
-        >
-          <TextField
-            id="cloud-product-registration"
-            label="Auditing, Logging, Monitoring, Alerting Metrics"
-            defaultValue="www.urlGivenByUser.com"
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "70%" }}
-          />
+  //     <form style={{ marginLeft: "20px", marginTop: "30px" }}>
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           flexDirection: "row",
+  //           width: "90%",
+  //           justifyContent: "space-between",
+  //           marginBottom: "25px",
+  //           padding: "25px 15px 15px 15px",
+  //           border: "1px solid #4287f5",
+  //           borderRadius: 10,
+  //         }}
+  //       >
+  //         <TextField
+  //           id="resiliency-measure-test-results"
+  //           label="Resiliency Measure Test Results"
+  //           defaultValue="www.urlGivenByUser.com"
+  //           autoComplete="off"
+  //           // helperText="Some important text"
+  //           variant="outlined"
+  //           style={{ width: "70%" }}
+  //           // onChange={}
+  //         />
+  //         {/* <TextField
+  //           id="solution-design-comment"
+  //           label="Comments"
+  //           defaultValue=""
+  //           autoComplete="off"
+  //           // helperText="Some important text"
+  //           variant="outlined"
+  //           style={{ width: "35%" }}
+  //           // onChange={}
+  //         /> */}
+  //         <TextareaAutosize
+  //           aria-label="empty textarea"
+  //           minRows={3}
+  //           placeholder="Comment"
+  //           style={{
+  //             borderColor: "lightgray",
+  //             borderRadius: 5,
+  //             height: "50px",
+  //           }}
+  //         />
+  //       </div>
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           flexDirection: "row",
+  //           width: "90%",
+  //           marginBottom: "25px",
+  //           justifyContent: "space-between",
+  //           padding: "25px 15px 15px 15px",
+  //           border: "1px solid #4287f5",
+  //           borderRadius: 10,
+  //         }}
+  //       >
+  //         <TextField
+  //           id="cloud-product-registration"
+  //           label="Auditing, Logging, Monitoring, Alerting Metrics"
+  //           defaultValue="www.urlGivenByUser.com"
+  //           autoComplete="off"
+  //           // helperText="Some important text"
+  //           variant="outlined"
+  //           style={{ width: "70%" }}
+  //         />
 
-          <TextareaAutosize
-            aria-label="empty textarea"
-            minRows={4}
-            placeholder="Comment"
-            style={{
-              borderColor: "lightgray",
-              borderRadius: 5,
-              height: "50px",
-            }}
-          />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "90%",
-            marginBottom: "25px",
-            justifyContent: "space-between",
-            padding: "25px 15px 15px 15px",
-            border: "1px solid #4287f5",
-            borderRadius: 10,
-          }}
-        >
-          <TextField
-            id="ekm-verification-evidencing"
-            label="EKM Verification & Evidencing"
-            defaultValue="www.urlGivenByUser.com"
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "70%" }}
-          />
-          {/* <TextField
-            id="ekm-verification-evidencing-comment"
-            label="Comments"
-            defaultValue=""
-            autoComplete="off"
-            // helperText="Some important text"
-            variant="outlined"
-            style={{ width: "35%" }}
-          /> */}
-          <TextareaAutosize
-            aria-label="empty textarea"
-            minRows={4}
-            placeholder="Comment"
-            style={{
-              borderColor: "lightgray",
-              borderRadius: 5,
-              height: "50px",
-            }}
-          />
-        </div>
+  //         <TextareaAutosize
+  //           aria-label="empty textarea"
+  //           minRows={4}
+  //           placeholder="Comment"
+  //           style={{
+  //             borderColor: "lightgray",
+  //             borderRadius: 5,
+  //             height: "50px",
+  //           }}
+  //         />
+  //       </div>
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           flexDirection: "row",
+  //           width: "90%",
+  //           marginBottom: "25px",
+  //           justifyContent: "space-between",
+  //           padding: "25px 15px 15px 15px",
+  //           border: "1px solid #4287f5",
+  //           borderRadius: 10,
+  //         }}
+  //       >
+  //         <TextField
+  //           id="ekm-verification-evidencing"
+  //           label="EKM Verification & Evidencing"
+  //           defaultValue="www.urlGivenByUser.com"
+  //           autoComplete="off"
+  //           // helperText="Some important text"
+  //           variant="outlined"
+  //           style={{ width: "70%" }}
+  //         />
+  //         {/* <TextField
+  //           id="ekm-verification-evidencing-comment"
+  //           label="Comments"
+  //           defaultValue=""
+  //           autoComplete="off"
+  //           // helperText="Some important text"
+  //           variant="outlined"
+  //           style={{ width: "35%" }}
+  //         /> */}
+  //         <TextareaAutosize
+  //           aria-label="empty textarea"
+  //           minRows={4}
+  //           placeholder="Comment"
+  //           style={{
+  //             borderColor: "lightgray",
+  //             borderRadius: 5,
+  //             height: "50px",
+  //           }}
+  //         />
+  //       </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            // marginRight: "30%",
-            marginTop: 50,
-          }}
-        >
-          <Button
-            variant="contained"
-            style={{ margin: "0 20px" }}
-            color="primary"
-            // disabled={!linkUrl}
-            onClick={handleReadyToReleaseModalClose}
-          >
-            Save
-          </Button>
-          <Button
-            variant="contained"
-            style={{ backgroundColor: "#FFFF", color: "black" }}
-            onClick={handleReadyToReleaseModalClose}
-          >
-            Cancel
-          </Button>
-        </div>
-      </form>
-    </div>
-  );
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           flexDirection: "row",
+  //           justifyContent: "center",
+  //           // marginRight: "30%",
+  //           marginTop: 50,
+  //         }}
+  //       >
+  //         <Button
+  //           variant="contained"
+  //           style={{ margin: "0 20px" }}
+  //           color="primary"
+  //           // disabled={!linkUrl}
+  //           onClick={handleReadyToReleaseModalClose}
+  //         >
+  //           Save
+  //         </Button>
+  //         <Button
+  //           variant="contained"
+  //           style={{ backgroundColor: "#FFFF", color: "black" }}
+  //           onClick={handleReadyToReleaseModalClose}
+  //         >
+  //           Cancel
+  //         </Button>
+  //       </div>
+  //     </form>
+  //   </div>
+  // );
   const conditionalBody = (
     <div style={modalStyle} className={classes.paper}>
       <div
@@ -835,7 +835,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           </Collapse>
         </TableCell>
       </TableRow>
-      <Modal
+      {/* <Modal
         open={readyToBuildModalOpen}
         onClose={handleReadyToBuildModalClose}
         aria-labelledby="simple-modal-title"
@@ -847,8 +847,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         }}
       >
         {readyToBuildBody}
-      </Modal>
-      <Modal
+      </Modal> */}
+      {/* <Modal
         open={readyToReleaseModalOpen}
         onClose={handleReadyToReleaseModalClose}
         aria-labelledby="simple-modal-title"
@@ -860,7 +860,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         }}
       >
         {readyToReleaseBody}
-      </Modal>
+      </Modal> */}
       <Modal
         open={conditionalModalOpen}
         onClose={handleConditionalModalClose}

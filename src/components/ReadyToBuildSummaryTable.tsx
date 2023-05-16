@@ -1,4 +1,4 @@
-import { GridColDef } from "@mui/x-data-grid";
+import { GridColDef } from "@material-ui/data-grid";
 
 export const RTBcolumns: GridColDef[] = [
   {
