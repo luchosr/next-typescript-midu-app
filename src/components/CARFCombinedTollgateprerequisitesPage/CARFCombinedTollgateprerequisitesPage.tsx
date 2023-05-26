@@ -24,6 +24,7 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { CARFCollapsibleTable } from "./CARFCollapsibleTable";
+import { CARFTableTest } from "./CARFTableTest";
 import { CARFStackedBarChart } from "./CARFStackedBarChart";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -251,6 +252,7 @@ export default function InputAdornments() {
         </AccordionDetails>
       </Accordion>
       <hr style={{ color: "#DEE1E7" }} />
+      {/* <CARFTableTest /> */}
       <CARFCollapsibleTable />
     </div>
   );

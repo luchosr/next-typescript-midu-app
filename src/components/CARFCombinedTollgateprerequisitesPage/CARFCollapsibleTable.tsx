@@ -71,10 +71,8 @@ const useRowStyles = makeStyles((theme: Theme) =>
     paper: {
       position: "absolute",
       width: "750px",
-      // height: "400px",
       fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
       backgroundColor: theme.palette.background.paper,
-      border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
       overflow: "auto",
@@ -90,38 +88,17 @@ const useRowStyles = makeStyles((theme: Theme) =>
 function Row(props: { row: ReturnType<typeof createData> }) {
   const { row } = props;
   const [fieldToEdit, setFieldToEdit] = React.useState("");
-  const [isStatusCompleted, setIsStatusCompleted] = React.useState({
-    rtb: true,
-    rtr: false,
-  });
-  const [isCompleted, setIsCompleted] = React.useState({
-    ["Ready to Design"]: false,
-    ["Ready to Release"]: false,
-  });
-  const [isSubmited, setIsSubmited] = React.useState({
-    ["Ready to Design"]: false,
-    ["Ready to Release"]: false,
-  });
+  const [isCompleted, setIsCompleted] = React.useState(["Ready to Build"]);
+  const [isSubmitted, setIsSubmitted] = React.useState<string[]>([]);
   const [editionSuccess, setEditionSuccess] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
-  const [readyToBuildModalOpen, setReadyToBuildModalOpen] =
-    React.useState(false);
-  const [readyToReleaseModalOpen, setReadyToReleaseModalOpen] =
-    React.useState(false);
+  const [submissionModalOpen, setSubmissionModalOpen] = React.useState(false);
   const [conditionalModalOpen, setConditionalModalOpen] = React.useState(false);
   const [deploymentPatterns, setDeploymentPatterns] = React.useState("yes");
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useRowStyles();
   const preventDefault = (event: React.SyntheticEvent) =>
     event.preventDefault();
-
-  const handleReadyToBuildModalOpen = () => {
-    setReadyToBuildModalOpen(true);
-  };
-
-  const handleReadyToBuildModalClose = () => {
-    setReadyToBuildModalOpen(false);
-  };
 
   const handleEdition = () => {
     setEditionSuccess(!editionSuccess);
@@ -131,13 +108,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
     setConditionalModalOpen(true);
     setEditionSuccess(false);
   };
-  const handleReadyToReleaseModalOpen = () => {
-    setReadyToReleaseModalOpen(true);
-  };
 
-  const handleReadyToReleaseModalClose = () => {
-    setReadyToReleaseModalOpen(false);
-  };
   const handleConditionalModalClose = () => {
     setConditionalModalOpen(false);
   };
@@ -146,6 +117,45 @@ function Row(props: { row: ReturnType<typeof createData> }) {
     const deploymentPatternsSelect = event.target.value;
     setDeploymentPatterns(deploymentPatternsSelect);
   };
+
+  const handleSubmissionModalOpen = () => {
+    setSubmissionModalOpen(true);
+  };
+  const handleSubmissionModalClose = () => {
+    setSubmissionModalOpen(false);
+  };
+  const handleSubmission = (rowName: any) => {
+    const submissions = [...isSubmitted, rowName];
+    setIsSubmitted(submissions);
+    handleSubmissionModalOpen();
+    console.log("Is submitted es: ", isSubmitted);
+  };
+  const submissionBody = (
+    <div style={modalStyle} className={classes.paper}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <h2>Submitted!</h2>
+
+        <span
+          style={{ cursor: "pointer" }}
+          onClick={handleSubmissionModalClose}
+        >
+          <CloseIcon />
+        </span>
+      </div>
+      <p>
+        You have submitted the mandatory pre-requisites for QA review. CARF team
+        will contact you shortly to either:
+      </p>
+      <p>a) update one or more pre-requisite(s)</p>
+      <p>b) schedule Tollgate Review</p>
+    </div>
+  );
 
   const conditionalBody = (
     <div style={modalStyle} className={classes.paper}>
@@ -157,9 +167,14 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         }}
       >
         {fieldToEdit === "Deployment Patterns" ? (
-          <h3>Confirm if design implements all relevant Deployment Patterns</h3>
+          <h3>
+            {!editionSuccess &&
+              "Confirm if design implements all relevant Deployment Patterns"}
+          </h3>
         ) : (
-          <h2 id="simple-modal-title">Edit {fieldToEdit}</h2>
+          <h2 id="simple-modal-title">
+            {!editionSuccess && `Edit ${fieldToEdit}`}
+          </h2>
         )}
 
         <span
@@ -170,7 +185,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         </span>
       </div>
 
-      <form style={{ marginLeft: "20px", marginTop: "30px" }}>
+      <form style={{ marginLeft: "20px" }}>
         {editionSuccess === false ? (
           <div
             style={{
@@ -183,8 +198,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
               borderRadius: 10,
             }}
           >
-            {" "}
-            {fieldToEdit === "Deployment Patterns" ? (
+            {/* {fieldToEdit === "Deployment Patterns" ? (
               <>
                 <FormControl variant="outlined" className={classes.formControl}>
                   <InputLabel id="demo-simple-select-outlined-label">
@@ -224,16 +238,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                     be null
                   </FormHelperText>
                 </FormControl>
-                {/* <TextareaAutosize
-                  aria-label="empty textarea"
-                  minRows={4}
-                  placeholder="Comment"
-                  style={{
-                    borderColor: "lightgray",
-                    borderRadius: 5,
-                    height: "50px",
-                  }}
-                /> */}
               </>
             ) : (
               <TextField
@@ -241,12 +245,65 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                 label={fieldToEdit}
                 defaultValue="www.urlGivenByUser.com"
                 autoComplete="off"
-                // helperText="Some important text"
                 variant="outlined"
                 style={{ width: "70%" }}
               />
+            )} */}
+            {fieldToEdit === "Deployment Patterns" && (
+              <>
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    Deployment Patterns
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="deployment-patterns"
+                    value={deploymentPatterns}
+                    // @ts-ignore
+                    onChange={handleSelectChange}
+                    label="Deployment Patterns"
+                    inputProps={{
+                      deploymentPatterns: deploymentPatterns,
+                      id: "outlined-age-native-simple",
+                    }}
+                  >
+                    <MenuItem value={"yes"}>
+                      Yes - the design implements ALL relevant deployment
+                      patterns
+                    </MenuItem>
+                    <MenuItem value={"no"}>
+                      No - the design DOES NOT implement ALL of the deployment
+                      patterns
+                    </MenuItem>
+                  </Select>
+                  <FormHelperText>
+                    If no, provide the rationale why in the comments section
+                  </FormHelperText>
+
+                  <h4>Solution Design (URL)</h4>
+                  <Link>
+                    https://confluence.intranet.db.com/display/GMRR/Evidence_Docs_sdd_exitplanV2
+                  </Link>
+                  <FormHelperText>
+                    If you have not provided your Solution Design URL, this will
+                    be null
+                  </FormHelperText>
+                </FormControl>
+              </>
             )}
-            {fieldToEdit === "Blueprint" ? null : (
+            {fieldToEdit !== "EKM Verification & Evidencing" &&
+              fieldToEdit !== "Deployment Patterns" && (
+                <TextField
+                  id={fieldToEdit}
+                  label={fieldToEdit}
+                  defaultValue="www.urlGivenByUser.com"
+                  autoComplete="off"
+                  variant="outlined"
+                  style={{ width: "70%" }}
+                />
+              )}
+            {fieldToEdit === "Blueprint" ||
+            fieldToEdit === "EKM Verification & Evidencing" ? null : (
               <TextareaAutosize
                 aria-label="empty textarea"
                 minRows={4}
@@ -258,6 +315,67 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                 }}
               />
             )}
+            {fieldToEdit === "EKM Verification & Evidencing" && (
+              <div>
+                <p>
+                  Step A: Run the report{" "}
+                  <a href="shortcut.db.com/EKMReport">
+                    shortcut.db.com/EKMReport
+                  </a>{" "}
+                  and action (if required) any steps to amend your EKM / LZ
+                  configuration as per{" "}
+                  <a href="shortcut.db.com/EKMGuide ">
+                    shortcut.db.com/EKMGuide
+                  </a>
+                </p>
+                <p>
+                  Step B: Export the report. Save in a confluence page. Provide
+                  the URL of the confluence page below
+                </p>
+                <TextField
+                  id={fieldToEdit}
+                  label={""}
+                  defaultValue=""
+                  placeholder="paste confluence URL here"
+                  autoComplete="off"
+                  variant="outlined"
+                  style={{ width: "90%" }}
+                  helperText="Mandatory"
+                />
+                <p>
+                  Step C: Provide any commentary / attestation required to
+                  explain / cover potential gaps highlighted in the report
+                </p>
+
+                <TextareaAutosize
+                  aria-label="empty textarea"
+                  minRows={4}
+                  placeholder="Comment"
+                  style={{
+                    borderColor: "lightgray",
+                    borderRadius: 5,
+                    height: "50px",
+                    width: "90%",
+                  }}
+                />
+                <p>
+                  Step D: If any files or other sources are required to enhance
+                  the details provided in Step C, please provide a URL to these
+                </p>
+
+                <TextareaAutosize
+                  aria-label="empty textarea"
+                  minRows={4}
+                  placeholder="Comment"
+                  style={{
+                    borderColor: "lightgray",
+                    borderRadius: 5,
+                    height: "50px",
+                    width: "90%",
+                  }}
+                />
+              </div>
+            )}
           </div>
         ) : (
           <div
@@ -265,11 +383,12 @@ function Row(props: { row: ReturnType<typeof createData> }) {
               display: "flex",
               width: "100%",
               flexDirection: "row",
-              alignItems: "center",
               justifyContent: "center",
+              fontSize: "1.5em",
+              marginBottom: 50,
             }}
           >
-            Edition successful <DoneAllIcon />
+            Saved!
           </div>
         )}
 
@@ -278,7 +397,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
-            // marginTop: 50,
             marginRight: 60,
           }}
         >
@@ -296,34 +414,18 @@ function Row(props: { row: ReturnType<typeof createData> }) {
               <Button
                 variant="contained"
                 style={{ backgroundColor: "#FFFF", color: "black" }}
-                onClick={handleReadyToReleaseModalClose}
+                onClick={handleConditionalModalClose}
               >
                 Cancel
               </Button>
             </>
           ) : (
-            <Button
-              variant="contained"
-              style={{ margin: "0 20px" }}
-              color="primary"
-              // disabled={!linkUrl}
-              onClick={handleConditionalModalClose}
-            >
-              Close
-            </Button>
+            ""
           )}
         </div>
       </form>
     </div>
   );
-
-  function handleClick(row: {
-    name: string;
-    fields: Fields[];
-    history: { date: string; customerId: string; amount: number }[];
-  }): void {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <React.Fragment>
@@ -352,11 +454,12 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         ></TableCell>
         <TableCell align="right"></TableCell>
         <TableCell align="right">
-          {row.name !== "Ready to Design" ? (
+          {row.name !== "Ready to Design" && !isSubmitted.includes(row.name) ? (
             <Button
               variant="contained"
-              disabled={true}
-              onClick={() => console.log(row.name)}
+              disabled={!isCompleted.includes(row.name)}
+              component={"button"}
+              onClick={() => handleSubmission(row.name)}
               style={{
                 textTransform: "capitalize",
                 fontSize: "12px",
@@ -364,6 +467,19 @@ function Row(props: { row: ReturnType<typeof createData> }) {
               }}
             >
               Submit
+            </Button>
+          ) : row.name !== "Ready to Design" &&
+            isSubmitted.includes(row.name) ? (
+            <Button
+              style={{
+                textTransform: "capitalize",
+                fontSize: "14px",
+                margin: 0,
+                color: "#01579B",
+              }}
+              disabled={true}
+            >
+              Submitted
             </Button>
           ) : (
             ""
@@ -401,12 +517,15 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                             style={{
                               textTransform: "capitalize",
                               fontSize: "12px",
-                              marginRight: "42px",
+                              marginRight: "37px",
                               color: "black",
                               marginLeft: "5px",
+                              lineHeight: "2.5",
                             }}
                           >
-                            <EditIcon style={{ marginRight: "0px" }} /> Edit
+                            <span style={{ marginLeft: 3 }}>
+                              <EditIcon style={{ marginRight: "2px" }} /> Edit
+                            </span>
                           </Link>
                         ) : (
                           ""
@@ -422,7 +541,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                           "Cloud Product Registration & Cloud Product Check" ? (
                           <Button
                             variant="text"
-                            // onClick={() => handleReadyToReleaseModalOpen()}
                             onClick={() =>
                               handleConditionalModalOpen(field.name)
                             }
@@ -439,7 +557,8 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                           ""
                         )}
                         {field.name === "RTO / RPO" ||
-                        field.name === "Information Classification" ? (
+                        field.name === "Information Classification" ||
+                        field.name === "Advisory" ? (
                           <div
                             style={{
                               display: "inline",
@@ -555,6 +674,19 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           </Collapse>
         </TableCell>
       </TableRow>
+      <Modal
+        open={submissionModalOpen}
+        onClose={handleSubmissionModalClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {submissionBody}
+      </Modal>
 
       <Modal
         open={conditionalModalOpen}
@@ -577,10 +709,6 @@ export const CARFCollapsibleTable = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const classes = useRowStyles();
-
-  const currentRows = rows.filter((r, ind) => {
-    return ind >= rowsPerPage * page && ind < rowsPerPage * (page + 1);
-  });
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);

@@ -16,43 +16,6 @@ import UserGuideVector from "../../../img/UserGuideVector.png";
 
 import PhoneIcon from "@material-ui/icons/Phone";
 
-// const AntTab = withStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       textTransform: "none",
-//       minWidth: 72,
-//       //   fontWeight: theme.typography.fontWeightRegular,
-//       marginRight: theme.spacing(4),
-//       fontFamily: [
-//         "-apple-system",
-//         "BlinkMacSystemFont",
-//         '"Segoe UI"',
-//         "Roboto",
-//         '"Helvetica Neue"',
-//         "Arial",
-//         "sans-serif",
-//         '"Apple Color Emoji"',
-//         '"Segoe UI Emoji"',
-//         '"Segoe UI Symbol"',
-//       ].join(","),
-//       "&:hover": {
-//         // color: '#40a9ff',
-//         // opacity: 1,
-//         // border: '1px solid red',
-//       },
-//       "&$selected": {
-//         // color: '#1890ff',
-//         // fontWeight: theme.typography.fontWeightMedium,
-//         fontWeight: "bold",
-//       },
-//       "&:focus": {
-//         // color: '#40a9ff',
-//       },
-//     },
-//     selected: {},
-//   })
-// )((props: StyledTabProps) => <Tab disableRipple {...props} />);
-
 interface StyledTabsProps {
   value: number;
   onChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
@@ -68,7 +31,6 @@ const StyledTabs = withStyles({
       maxWidth: 40,
       width: "100%",
       fontWeight: "bold",
-      //   backgroundColor: '#635ee7',
     },
   },
 })((props: StyledTabsProps) => (
@@ -84,11 +46,9 @@ const StyledTab = withStyles((theme: Theme) =>
     root: {
       textTransform: "none",
       color: "rgba(0, 0, 0, 0.5)",
-      //   fontWeight: theme.typography.fontWeightRegular,
       fontSize: theme.typography.pxToRem(15),
       marginRight: theme.spacing(1),
       "&:focus": {
-        // opacity: 1,
         fontWeight: "bold",
         color: "#000000DE",
       },
@@ -97,18 +57,31 @@ const StyledTab = withStyles((theme: Theme) =>
 )((props: StyledTabProps) => <Tab disableRipple {...props} />);
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-  },
+  // root: {
+  //   flexGrow: 1,
+  // },
   padding: {
     padding: theme.spacing(3),
   },
   demo1: {
     backgroundColor: theme.palette.background.paper,
   },
-  demo2: {
+  tabsWrapper: {
     color: "#000000DE",
   },
+  tabIconStyle: {
+    width: 17,
+    height: 18,
+  },
+  tabButton: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    outline: "none",
+    border: "none",
+    backgroundColor: "none",
+  },
+  tabText: { paddingLeft: "5px" },
 }));
 
 export const CustomizedTabs = () => {
@@ -121,49 +94,22 @@ export const CustomizedTabs = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.demo2}>
-        <div className="">
-          <button
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              outline: "none",
-              border: "none",
-              backgroundColor: "none",
-            }}
-          >
-            <img src={TollgateVectorIcon} style={{ width: 17, height: 18 }} />
-            <span style={{ paddingLeft: "5px" }}>Tollgate Pre-Requisites</span>
+      {/* <div className={classes.tabsWrapper}>
+        <div>
+          <button className={classes.tabButton}>
+            <img src={TollgateVectorIcon} className={classes.tabIconStyle} />
+            <span className={classes.tabText}>Tollgate Pre-Requisites</span>
           </button>
-          <button
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              outline: "none",
-              border: "none",
-              backgroundColor: "none",
-            }}
-          >
-            <img src={StatusVector} style={{ width: 17, height: 18 }} />
-            <span style={{ paddingLeft: "5px" }}>Tollgate Status</span>
+          <button className={classes.tabButton}>
+            <img src={StatusVector} className={classes.tabIconStyle} />
+            <span className={classes.tabText}>Tollgate Status</span>
           </button>{" "}
-          <button
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              outline: "none",
-              border: "none",
-              backgroundColor: "none",
-            }}
-          >
-            <img src={UserGuideVector} style={{ width: 17, height: 18 }} />
-            <span style={{ paddingLeft: "5px" }}>User Guide</span>
+          <button className={classes.tabButton}>
+            <img src={UserGuideVector} className={classes.tabIconStyle} />
+            <span className={classes.tabText}>User Guide</span>
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
