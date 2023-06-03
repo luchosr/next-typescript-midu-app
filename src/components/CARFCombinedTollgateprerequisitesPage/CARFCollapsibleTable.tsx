@@ -1,714 +1,508 @@
-import React from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { rows, createData, Fields } from "./mockedData";
-import Box from "@material-ui/core/Box";
-import Link from "@material-ui/core/Link";
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
-import InfoIcon from "@material-ui/icons/Info";
-import WatchLaterIcon from "@material-ui/icons/WatchLater";
-import DoneAllIcon from "@material-ui/icons/DoneAll";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Button from "@material-ui/core/Button";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import EditIcon from "@material-ui/icons/Edit";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import CancelIcon from "@material-ui/icons/Cancel";
-import CloseIcon from "@material-ui/icons/Close";
-import Paper from "@material-ui/core/Paper";
-import TablePagination from "@material-ui/core/TablePagination";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Select,
-  TextField,
-} from "@mui/material";
+import React from 'react';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { rows, createData, Fields, mySampleObject } from './mockedData';
+import { getModalStyle, useRowStyles } from './styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import Paper from '@material-ui/core/Paper';
+import TablePagination from '@material-ui/core/TablePagination';
+import { Row } from './CARFTableRow';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+// function Row(props: { row: ReturnType<typeof createData> }) {
+//   const { row } = props;
+//   const [fieldToEdit, setFieldToEdit] = React.useState('');
+//   const [narIdObject, setNarIdObject] = React.useState({});
+//   const [isCompleted, setIsCompleted] = React.useState(['Ready to Build']);
+//   const [isSubmitted, setIsSubmitted] = React.useState<string[]>([]);
+//   const [editionSuccess, setEditionSuccess] = React.useState(false);
+//   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+//   const [submissionModalOpen, setSubmissionModalOpen] = React.useState(false);
+//   const [conditionalModalOpen, setConditionalModalOpen] = React.useState(false);
+//   const [deploymentPatterns, setDeploymentPatterns] = React.useState('yes');
+//   const [modalStyle] = React.useState(getModalStyle);
+//   const classes = useRowStyles();
+//   const preventDefault = (event: React.SyntheticEvent) =>
+//     event.preventDefault();
 
-function getModalStyle() {
-  const top = 10;
-  const left = 25;
+//   const handleEdition = () => {
+//     setEditionSuccess(!editionSuccess);
+//   };
+//   const handleConditionalModalOpen = (editingField: string) => {
+//     setFieldToEdit(editingField);
+//     setConditionalModalOpen(true);
+//     setEditionSuccess(false);
+//   };
 
-  return {
-    top: `${top}%`,
-    margin: "auto",
-  };
-}
-const useRowStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      backgroundColor: "lime",
-      "& > *": {
-        borderBottom: "unset",
-      },
-      "& .MuiTableRow-root": {
-        backgroundColor: "red",
-        marginLeft: 150,
-      },
-    },
-    formControl: {
-      width: "70%",
-      display: "block",
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-    paper: {
-      position: "absolute",
-      width: "750px",
-      fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
-      backgroundColor: theme.palette.background.paper,
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-      overflow: "auto",
-    },
-    deploymentPatternsSelect: {
-      margin: "30px",
-    },
-    mainTableCell: { paddingLeft: 10, width: "80%" },
-    dropdownIconButton: { marginRight: 10 },
-  })
-);
+//   const handleConditionalModalClose = () => {
+//     setConditionalModalOpen(false);
+//   };
 
-function Row(props: { row: ReturnType<typeof createData> }) {
-  const { row } = props;
-  const [fieldToEdit, setFieldToEdit] = React.useState("");
-  const [isCompleted, setIsCompleted] = React.useState(["Ready to Build"]);
-  const [isSubmitted, setIsSubmitted] = React.useState<string[]>([]);
-  const [editionSuccess, setEditionSuccess] = React.useState(false);
-  const [dropdownOpen, setDropdownOpen] = React.useState(false);
-  const [submissionModalOpen, setSubmissionModalOpen] = React.useState(false);
-  const [conditionalModalOpen, setConditionalModalOpen] = React.useState(false);
-  const [deploymentPatterns, setDeploymentPatterns] = React.useState("yes");
-  const [modalStyle] = React.useState(getModalStyle);
-  const classes = useRowStyles();
-  const preventDefault = (event: React.SyntheticEvent) =>
-    event.preventDefault();
+//   const urlInputHandler = (preReq: string, value: string) => {
+//     const newNarIdObject: object = { ...narIdObject };
+//     // @ts-ignore
+//     newNarIdObject.preReq.url = value;
+//     setNarIdObject(newNarIdObject);
+//   };
 
-  const handleEdition = () => {
-    setEditionSuccess(!editionSuccess);
-  };
-  const handleConditionalModalOpen = (editingField: string) => {
-    setFieldToEdit(editingField);
-    setConditionalModalOpen(true);
-    setEditionSuccess(false);
-  };
+//   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+//     const deploymentPatternsSelect = event.target.value;
+//     setDeploymentPatterns(deploymentPatternsSelect);
+//   };
 
-  const handleConditionalModalClose = () => {
-    setConditionalModalOpen(false);
-  };
+//   const handleSubmissionModalOpen = () => {
+//     setSubmissionModalOpen(true);
+//   };
+//   const handleSubmissionModalClose = () => {
+//     setSubmissionModalOpen(false);
+//   };
+//   const handleSubmission = (rowName: any) => {
+//     const submissions = [...isSubmitted, rowName];
+//     setIsSubmitted(submissions);
+//     handleSubmissionModalOpen();
+//     console.log('Is submitted es: ', isSubmitted);
+//   };
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const deploymentPatternsSelect = event.target.value;
-    setDeploymentPatterns(deploymentPatternsSelect);
-  };
+//   // const conditionalBody = (
+//   //   <div style={modalStyle} className={classes.paper}>
+//   //     <div
+//   //       style={{
+//   //         display: 'flex',
+//   //         flexDirection: 'row',
+//   //         justifyContent: 'space-between',
+//   //       }}
+//   //     >
+//   //       {fieldToEdit === 'Deployment Patterns' ? (
+//   //         <h3>
+//   //           {!editionSuccess &&
+//   //             'Confirm if design implements all relevant Deployment Patterns'}
+//   //         </h3>
+//   //       ) : (
+//   //         <h2 id='simple-modal-title'>
+//   //           {!editionSuccess && `Edit ${fieldToEdit}`}
+//   //         </h2>
+//   //       )}
 
-  const handleSubmissionModalOpen = () => {
-    setSubmissionModalOpen(true);
-  };
-  const handleSubmissionModalClose = () => {
-    setSubmissionModalOpen(false);
-  };
-  const handleSubmission = (rowName: any) => {
-    const submissions = [...isSubmitted, rowName];
-    setIsSubmitted(submissions);
-    handleSubmissionModalOpen();
-    console.log("Is submitted es: ", isSubmitted);
-  };
-  const submissionBody = (
-    <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <h2>Submitted!</h2>
+//   //       <span
+//   //         style={{ cursor: 'pointer' }}
+//   //         onClick={handleConditionalModalClose}
+//   //       >
+//   //         <CloseIcon />
+//   //       </span>
+//   //     </div>
 
-        <span
-          style={{ cursor: "pointer" }}
-          onClick={handleSubmissionModalClose}
-        >
-          <CloseIcon />
-        </span>
-      </div>
-      <p>
-        You have submitted the mandatory pre-requisites for QA review. CARF team
-        will contact you shortly to either:
-      </p>
-      <p>a) update one or more pre-requisite(s)</p>
-      <p>b) schedule Tollgate Review</p>
-    </div>
-  );
+//   //     <form style={{ marginLeft: '20px' }}>
+//   //       {editionSuccess === false ? (
+//   //         <div
+//   //           style={{
+//   //             display: 'flex',
+//   //             flexDirection: 'row',
+//   //             width: '90%',
+//   //             justifyContent: 'space-between',
+//   //             marginBottom: '25px',
+//   //             padding: '25px 15px 15px 15px',
+//   //             borderRadius: 10,
+//   //           }}
+//   //         >
+//   //           {fieldToEdit === 'Deployment Patterns' && (
+//   //             <div>
+//   //               <FormControl variant='outlined' className={classes.formControl}>
+//   //                 <InputLabel id='demo-simple-select-outlined-label'>
+//   //                   Deployment Patterns
+//   //                 </InputLabel>
+//   //                 <Select
+//   //                   labelId='demo-simple-select-outlined-label'
+//   //                   id='deployment-patterns'
+//   //                   value={deploymentPatterns}
+//   //                   // @ts-ignore
+//   //                   onChange={handleSelectChange}
+//   //                   label='Deployment Patterns'
+//   //                   inputProps={{
+//   //                     deploymentPatterns: deploymentPatterns,
+//   //                     id: 'outlined-age-native-simple',
+//   //                   }}
+//   //                 >
+//   //                   <MenuItem value={'yes'}>
+//   //                     Yes - the design implements ALL relevant deployment
+//   //                     patterns
+//   //                   </MenuItem>
+//   //                   <MenuItem value={'no'}>
+//   //                     No - the design DOES NOT implement ALL of the deployment
+//   //                     patterns
+//   //                   </MenuItem>
+//   //                 </Select>
+//   //                 <FormHelperText>
+//   //                   If no, provide the rationale why in the comments section
+//   //                 </FormHelperText>
 
-  const conditionalBody = (
-    <div style={modalStyle} className={classes.paper}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        {fieldToEdit === "Deployment Patterns" ? (
-          <h3>
-            {!editionSuccess &&
-              "Confirm if design implements all relevant Deployment Patterns"}
-          </h3>
-        ) : (
-          <h2 id="simple-modal-title">
-            {!editionSuccess && `Edit ${fieldToEdit}`}
-          </h2>
-        )}
+//   //                 <h4>Solution Design (URL)</h4>
+//   //                 <Link>
+//   //                   https://confluence.intranet.db.com/display/GMRR/Evidence_Docs_sdd_exitplanV2
+//   //                 </Link>
+//   //                 <FormHelperText>
+//   //                   If you have not provided your Solution Design URL, this will
+//   //                   be null
+//   //                 </FormHelperText>
+//   //               </FormControl>
+//   //             </div>
+//   //           )}
+//   //           {fieldToEdit !== 'EKM Verification & Evidencing' &&
+//   //             fieldToEdit !== 'Deployment Patterns' && (
+//   //               <TextField
+//   //                 id={fieldToEdit}
+//   //                 label={fieldToEdit}
+//   //                 defaultValue='www.urlGivenByUser.com'
+//   //                 autoComplete='off'
+//   //                 variant='outlined'
+//   //                 style={{ width: '70%' }}
+//   //               />
+//   //             )}
+//   //           {fieldToEdit === 'Blueprint' ||
+//   //           fieldToEdit === 'EKM Verification & Evidencing' ? null : (
+//   //             <TextareaAutosize
+//   //               aria-label='empty textarea'
+//   //               minRows={4}
+//   //               placeholder='Comment'
+//   //               style={{
+//   //                 borderColor: 'lightgray',
+//   //                 borderRadius: 5,
+//   //                 height: '50px',
+//   //               }}
+//   //             />
+//   //           )}
+//   //           {fieldToEdit === 'EKM Verification & Evidencing' && (
+//   //             <div>
+//   //               <p>
+//   //                 Step A: Run the report{' '}
+//   //                 <a href='shortcut.db.com/EKMReport'>
+//   //                   shortcut.db.com/EKMReport
+//   //                 </a>{' '}
+//   //                 and action (if required) any steps to amend your EKM / LZ
+//   //                 configuration as per{' '}
+//   //                 <a href='shortcut.db.com/EKMGuide '>
+//   //                   shortcut.db.com/EKMGuide
+//   //                 </a>
+//   //               </p>
+//   //               <p>
+//   //                 Step B: Export the report. Save in a confluence page. Provide
+//   //                 the URL of the confluence page below
+//   //               </p>
+//   //               <TextField
+//   //                 id={fieldToEdit}
+//   //                 label={''}
+//   //                 defaultValue=''
+//   //                 placeholder='paste confluence URL here'
+//   //                 autoComplete='off'
+//   //                 variant='outlined'
+//   //                 style={{ width: '90%' }}
+//   //                 helperText='Mandatory'
+//   //               />
+//   //               <p>
+//   //                 Step C: Provide any commentary / attestation required to
+//   //                 explain / cover potential gaps highlighted in the report
+//   //               </p>
 
-        <span
-          style={{ cursor: "pointer" }}
-          onClick={handleConditionalModalClose}
-        >
-          <CloseIcon />
-        </span>
-      </div>
+//   //               <TextareaAutosize
+//   //                 aria-label='empty textarea'
+//   //                 minRows={4}
+//   //                 placeholder='Comment'
+//   //                 style={{
+//   //                   borderColor: 'lightgray',
+//   //                   borderRadius: 5,
+//   //                   height: '50px',
+//   //                   width: '90%',
+//   //                 }}
+//   //               />
+//   //               <p>
+//   //                 Step D: If any files or other sources are required to enhance
+//   //                 the details provided in Step C, please provide a URL to these
+//   //               </p>
 
-      <form style={{ marginLeft: "20px" }}>
-        {editionSuccess === false ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              width: "90%",
-              justifyContent: "space-between",
-              marginBottom: "25px",
-              padding: "25px 15px 15px 15px",
-              borderRadius: 10,
-            }}
-          >
-            {/* {fieldToEdit === "Deployment Patterns" ? (
-              <>
-                <FormControl variant="outlined" className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-outlined-label">
-                    Deployment Patterns
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="deployment-patterns"
-                    value={deploymentPatterns}
-                    // @ts-ignore
-                    onChange={handleSelectChange}
-                    label="Deployment Patterns"
-                    inputProps={{
-                      deploymentPatterns: deploymentPatterns,
-                      id: "outlined-age-native-simple",
-                    }}
-                  >
-                    <MenuItem value={"yes"}>
-                      Yes - the design implements ALL relevant deployment
-                      patterns
-                    </MenuItem>
-                    <MenuItem value={"no"}>
-                      No - the design DOES NOT implement ALL of the deployment
-                      patterns
-                    </MenuItem>
-                  </Select>
-                  <FormHelperText>
-                    If no, provide the rationale why in the comments section
-                  </FormHelperText>
+//   //               <TextareaAutosize
+//   //                 aria-label='empty textarea'
+//   //                 minRows={4}
+//   //                 placeholder='Comment'
+//   //                 style={{
+//   //                   borderColor: 'lightgray',
+//   //                   borderRadius: 5,
+//   //                   height: '50px',
+//   //                   width: '90%',
+//   //                 }}
+//   //               />
+//   //             </div>
+//   //           )}
+//   //         </div>
+//   //       ) : (
+//   //         <div
+//   //           style={{
+//   //             display: 'flex',
+//   //             width: '100%',
+//   //             flexDirection: 'row',
+//   //             justifyContent: 'center',
+//   //             fontSize: '1.5em',
+//   //             marginBottom: 50,
+//   //           }}
+//   //         >
+//   //           Saved!
+//   //         </div>
+//   //       )}
 
-                  <h4>Solution Design (URL)</h4>
-                  <Link>
-                    https://confluence.intranet.db.com/display/GMRR/Evidence_Docs_sdd_exitplanV2
-                  </Link>
-                  <FormHelperText>
-                    If you have not provided your Solution Design URL, this will
-                    be null
-                  </FormHelperText>
-                </FormControl>
-              </>
-            ) : (
-              <TextField
-                id={fieldToEdit}
-                label={fieldToEdit}
-                defaultValue="www.urlGivenByUser.com"
-                autoComplete="off"
-                variant="outlined"
-                style={{ width: "70%" }}
-              />
-            )} */}
-            {fieldToEdit === "Deployment Patterns" && (
-              <>
-                <FormControl variant="outlined" className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-outlined-label">
-                    Deployment Patterns
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="deployment-patterns"
-                    value={deploymentPatterns}
-                    // @ts-ignore
-                    onChange={handleSelectChange}
-                    label="Deployment Patterns"
-                    inputProps={{
-                      deploymentPatterns: deploymentPatterns,
-                      id: "outlined-age-native-simple",
-                    }}
-                  >
-                    <MenuItem value={"yes"}>
-                      Yes - the design implements ALL relevant deployment
-                      patterns
-                    </MenuItem>
-                    <MenuItem value={"no"}>
-                      No - the design DOES NOT implement ALL of the deployment
-                      patterns
-                    </MenuItem>
-                  </Select>
-                  <FormHelperText>
-                    If no, provide the rationale why in the comments section
-                  </FormHelperText>
+//   //       <div
+//   //         style={{
+//   //           display: 'flex',
+//   //           flexDirection: 'row',
+//   //           justifyContent: 'flex-end',
+//   //           marginRight: 60,
+//   //         }}
+//   //       >
+//   //         {editionSuccess === false ? (
+//   //           <>
+//   //             <Button
+//   //               variant='contained'
+//   //               style={{ margin: '0 20px' }}
+//   //               color='primary'
+//   //               // disabled={!linkUrl}
+//   //               onClick={handleEdition}
+//   //             >
+//   //               Save
+//   //             </Button>
+//   //             <Button
+//   //               variant='contained'
+//   //               style={{ backgroundColor: '#FFFF', color: 'black' }}
+//   //               onClick={handleConditionalModalClose}
+//   //             >
+//   //               Cancel
+//   //             </Button>
+//   //           </>
+//   //         ) : (
+//   //           ''
+//   //         )}
+//   //       </div>
+//   //     </form>
+//   //   </div>
+//   // );
 
-                  <h4>Solution Design (URL)</h4>
-                  <Link>
-                    https://confluence.intranet.db.com/display/GMRR/Evidence_Docs_sdd_exitplanV2
-                  </Link>
-                  <FormHelperText>
-                    If you have not provided your Solution Design URL, this will
-                    be null
-                  </FormHelperText>
-                </FormControl>
-              </>
-            )}
-            {fieldToEdit !== "EKM Verification & Evidencing" &&
-              fieldToEdit !== "Deployment Patterns" && (
-                <TextField
-                  id={fieldToEdit}
-                  label={fieldToEdit}
-                  defaultValue="www.urlGivenByUser.com"
-                  autoComplete="off"
-                  variant="outlined"
-                  style={{ width: "70%" }}
-                />
-              )}
-            {fieldToEdit === "Blueprint" ||
-            fieldToEdit === "EKM Verification & Evidencing" ? null : (
-              <TextareaAutosize
-                aria-label="empty textarea"
-                minRows={4}
-                placeholder="Comment"
-                style={{
-                  borderColor: "lightgray",
-                  borderRadius: 5,
-                  height: "50px",
-                }}
-              />
-            )}
-            {fieldToEdit === "EKM Verification & Evidencing" && (
-              <div>
-                <p>
-                  Step A: Run the report{" "}
-                  <a href="shortcut.db.com/EKMReport">
-                    shortcut.db.com/EKMReport
-                  </a>{" "}
-                  and action (if required) any steps to amend your EKM / LZ
-                  configuration as per{" "}
-                  <a href="shortcut.db.com/EKMGuide ">
-                    shortcut.db.com/EKMGuide
-                  </a>
-                </p>
-                <p>
-                  Step B: Export the report. Save in a confluence page. Provide
-                  the URL of the confluence page below
-                </p>
-                <TextField
-                  id={fieldToEdit}
-                  label={""}
-                  defaultValue=""
-                  placeholder="paste confluence URL here"
-                  autoComplete="off"
-                  variant="outlined"
-                  style={{ width: "90%" }}
-                  helperText="Mandatory"
-                />
-                <p>
-                  Step C: Provide any commentary / attestation required to
-                  explain / cover potential gaps highlighted in the report
-                </p>
+//   return (
+//     <React.Fragment>
+//       <TableRow className={classes.mainTableRow}>
+//         <TableCell className={classes.mainTableCell}>
+//           <IconButton
+//             aria-label='expand row'
+//             size='small'
+//             onClick={() => setDropdownOpen(!dropdownOpen)}
+//             className={classes.dropdownIconButton}
+//           >
+//             {dropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+//           </IconButton>
+//           {/* ola ke ase{row.name} */}
+//           {/* {mySampleObject?.tollgates?.ready_to_build.name} */}
+//           {mySampleObject?.tollgates[0].name}
+//         </TableCell>
 
-                <TextareaAutosize
-                  aria-label="empty textarea"
-                  minRows={4}
-                  placeholder="Comment"
-                  style={{
-                    borderColor: "lightgray",
-                    borderRadius: 5,
-                    height: "50px",
-                    width: "90%",
-                  }}
-                />
-                <p>
-                  Step D: If any files or other sources are required to enhance
-                  the details provided in Step C, please provide a URL to these
-                </p>
+//         <TableCell align='right' className={classes.labelTableCell}></TableCell>
+//         <TableCell align='right'></TableCell>
+//         <TableCell align='right'>
+//           {row.name !== 'Ready to Design' && !isSubmitted.includes(row.name) ? (
+//             <Button
+//               variant='contained'
+//               disabled={!isCompleted.includes(row.name)}
+//               component={'button'}
+//               onClick={() => handleSubmission(row.name)}
+//               className={classes.submitButton}
+//             >
+//               Submit
+//             </Button>
+//           ) : row.name !== 'Ready to Design' &&
+//             isSubmitted.includes(row.name) ? (
+//             <Button className={classes.submittedButton} disabled={true}>
+//               Submitted
+//             </Button>
+//           ) : (
+//             ''
+//           )}
+//         </TableCell>
+//       </TableRow>
+//       <TableRow>
+//         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+//           <Collapse in={dropdownOpen} timeout='auto' unmountOnExit>
+//             <Box margin={1}>
+//               <Table size='small' aria-label='purchases'>
+//                 <TableHead style={{ backgroundColor: '#EDEFF2' }}>
+//                   <TableRow>
+//                     <TableCell align='left'>Pre-Requisite</TableCell>
+//                     <TableCell align='left'>Status</TableCell>
+//                     <TableCell align='left'>Rationale</TableCell>
+//                     <TableCell align='left'>Label</TableCell>
+//                   </TableRow>
+//                 </TableHead>
+//                 <TableBody style={{ marginLeft: 55 }}>
+//                   {row.fields.map((field) => (
+//                     <TableRow key={field?.name}>
+//                       <TableCell
+//                         align='left'
+//                         component='th'
+//                         scope='row'
+//                         style={{ width: '33%', padding: 0 }}
+//                       >
+//                         {field?.name === 'Ready to Build Survey' ||
+//                         field?.name === 'Blueprint' ? (
+//                           <Link
+//                             href='waltz.intranet.db.com/waltz/application/external-id/109235-1'
+//                             target='_blank'
+//                             rel='noopener'
+//                             className={classes.waltzPreReqLink}
+//                           >
+//                             <span style={{ marginLeft: 3 }}>
+//                               <EditIcon style={{ marginRight: '2px' }} /> Edit
+//                             </span>
+//                           </Link>
+//                         ) : (
+//                           ''
+//                         )}
 
-                <TextareaAutosize
-                  aria-label="empty textarea"
-                  minRows={4}
-                  placeholder="Comment"
-                  style={{
-                    borderColor: "lightgray",
-                    borderRadius: 5,
-                    height: "50px",
-                    width: "90%",
-                  }}
-                />
-              </div>
-            )}
-          </div>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "center",
-              fontSize: "1.5em",
-              marginBottom: 50,
-            }}
-          >
-            Saved!
-          </div>
-        )}
+//                         {field?.name === 'Solution Design' ||
+//                         field?.name === 'Deployment Patterns' ||
+//                         field?.name === 'Resiliency Measure Test Results' ||
+//                         field?.name ===
+//                           'Auditing, Logging, Monitoring, Alerting Metrics' ||
+//                         field?.name === 'EKM Verification & Evidencing' ||
+//                         field?.name ===
+//                           'Cloud Product Registration & Cloud Product Check' ? (
+//                           <Button
+//                             variant='text'
+//                             onClick={() =>
+//                               handleConditionalModalOpen(field.name)
+//                             }
+//                             className={classes.editButton}
+//                           >
+//                             <EditIcon style={{ marginRight: '5px' }} /> Edit
+//                           </Button>
+//                         ) : (
+//                           ''
+//                         )}
+//                         {field.name === 'RTO / RPO' ||
+//                         field.name === 'Information Classification' ||
+//                         field.name === 'Advisory' ? (
+//                           <div className={classes.preReqWhitespace}></div>
+//                         ) : (
+//                           ''
+//                         )}
+//                         <Link href='#' onClick={preventDefault}>
+//                           {field?.name}
+//                         </Link>
+//                       </TableCell>
+//                       <TableCell align='left'>
+//                         {field.status === 'Self Served' && (
+//                           <span className={classes.selfServedStatus}>
+//                             <InfoIcon className={classes.statusIcon} />
+//                             {field.status}
+//                           </span>
+//                         )}
+//                         {field.status === 'Completed' && (
+//                           <span className={classes.completedStatus}>
+//                             <CheckCircleIcon className={classes.statusIcon} />
+//                             {field.status}
+//                           </span>
+//                         )}
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            marginRight: 60,
-          }}
-        >
-          {editionSuccess === false ? (
-            <>
-              <Button
-                variant="contained"
-                style={{ margin: "0 20px" }}
-                color="primary"
-                // disabled={!linkUrl}
-                onClick={handleEdition}
-              >
-                Save
-              </Button>
-              <Button
-                variant="contained"
-                style={{ backgroundColor: "#FFFF", color: "black" }}
-                onClick={handleConditionalModalClose}
-              >
-                Cancel
-              </Button>
-            </>
-          ) : (
-            ""
-          )}
-        </div>
-      </form>
-    </div>
-  );
+//                         {field.status === 'Not required' && (
+//                           <span className={classes.notRequiredStatus}>
+//                             <CancelIcon className={classes.statusIcon} />
+//                             {field.status}
+//                           </span>
+//                         )}
+//                         {field.status === 'In progress' && (
+//                           <span className={classes.inprogressStatus}>
+//                             <PlayCircleFilledIcon
+//                               className={classes.statusIcon}
+//                             />
+//                             {field.status}
+//                           </span>
+//                         )}
+//                         {field.status === 'Not started' && (
+//                           <span className={classes.notRequiredStatus}>
+//                             <WatchLaterIcon className={classes.statusIcon} />
+//                             {field.status}
+//                           </span>
+//                         )}
+//                       </TableCell>
+//                       <TableCell align='left' style={{ overflow: 'hidden' }}>
+//                         {field?.rationale}
+//                       </TableCell>
+//                       <TableCell
+//                         align='left'
+//                         style={{ overflow: 'hidden', width: '300px' }}
+//                       ></TableCell>
+//                     </TableRow>
+//                   ))}
+//                 </TableBody>
+//               </Table>
+//             </Box>
+//           </Collapse>
+//         </TableCell>
+//       </TableRow>
+//       <Modal
+//         open={submissionModalOpen}
+//         onClose={handleSubmissionModalClose}
+//         aria-labelledby='simple-modal-title'
+//         aria-describedby='simple-modal-description'
+//         style={{
+//           display: 'flex',
+//           alignItems: 'center',
+//           justifyContent: 'center',
+//         }}
+//       >
+//         <SubmissionBody
+//           bodyStyle={modalStyle}
+//           bodyClassName={classes.paper}
+//           clickHandler={handleSubmissionModalClose}
+//         />
+//       </Modal>
 
-  return (
-    <React.Fragment>
-      <TableRow style={{ backgroundColor: "#29B6F61A" }}>
-        <TableCell className={classes.mainTableCell}>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className={classes.dropdownIconButton}
-          >
-            {dropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-          </IconButton>
-          {row.name}
-        </TableCell>
+//       <Modal
+//         open={conditionalModalOpen}
+//         onClose={handleConditionalModalClose}
+//         aria-labelledby='simple-modal-title'
+//         aria-describedby='simple-modal-description'
+//         style={{
+//           display: 'flex',
+//           justifyContent: 'center',
+//         }}
+//       >
+//         <ConditionalBody
+//           bodyStyle={modalStyle}
+//           bodyClassName={classes.paper}
+//           clickHandler={handleConditionalModalClose}
+//           fieldToEdit={fieldToEdit}
+//           editionSuccess={editionSuccess}
+//           deploymentPatterns={deploymentPatterns}
+//           editionHandler={handleEdition}
+//           selectChangeHandler={handleSelectChange}
+//         />
+//         {/* {conditionalBody} */}
+//       </Modal>
+//     </React.Fragment>
+//   );
+// }
 
-        <TableCell
-          align="right"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-around",
-            padding: "15px 8px 0px",
-            borderBottom: "none",
-          }}
-        ></TableCell>
-        <TableCell align="right"></TableCell>
-        <TableCell align="right">
-          {row.name !== "Ready to Design" && !isSubmitted.includes(row.name) ? (
-            <Button
-              variant="contained"
-              disabled={!isCompleted.includes(row.name)}
-              component={"button"}
-              onClick={() => handleSubmission(row.name)}
-              style={{
-                textTransform: "capitalize",
-                fontSize: "12px",
-                margin: 0,
-              }}
-            >
-              Submit
-            </Button>
-          ) : row.name !== "Ready to Design" &&
-            isSubmitted.includes(row.name) ? (
-            <Button
-              style={{
-                textTransform: "capitalize",
-                fontSize: "14px",
-                margin: 0,
-                color: "#01579B",
-              }}
-              disabled={true}
-            >
-              Submitted
-            </Button>
-          ) : (
-            ""
-          )}
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={dropdownOpen} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Table size="small" aria-label="purchases">
-                <TableHead style={{ backgroundColor: "#EDEFF2" }}>
-                  <TableRow>
-                    <TableCell align="left">Pre-Requisite</TableCell>
-                    <TableCell align="left">Status</TableCell>
-                    <TableCell align="left">Rationale</TableCell>
-                    <TableCell align="left">Label</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody style={{ marginLeft: 55 }}>
-                  {row.fields.map((field) => (
-                    <TableRow key={field?.name}>
-                      <TableCell
-                        align="left"
-                        component="th"
-                        scope="row"
-                        style={{ width: "33%", padding: 0 }}
-                      >
-                        {field?.name === "Ready to Build Survey" ||
-                        field?.name === "Blueprint" ? (
-                          <Link
-                            href="waltz.intranet.db.com/waltz/application/external-id/109235-1"
-                            target="_blank"
-                            rel="noopener"
-                            style={{
-                              textTransform: "capitalize",
-                              fontSize: "12px",
-                              marginRight: "37px",
-                              color: "black",
-                              marginLeft: "5px",
-                              lineHeight: "2.5",
-                            }}
-                          >
-                            <span style={{ marginLeft: 3 }}>
-                              <EditIcon style={{ marginRight: "2px" }} /> Edit
-                            </span>
-                          </Link>
-                        ) : (
-                          ""
-                        )}
-
-                        {field?.name === "Solution Design" ||
-                        field?.name === "Deployment Patterns" ||
-                        field?.name === "Resiliency Measure Test Results" ||
-                        field?.name ===
-                          "Auditing, Logging, Monitoring, Alerting Metrics" ||
-                        field?.name === "EKM Verification & Evidencing" ||
-                        field?.name ===
-                          "Cloud Product Registration & Cloud Product Check" ? (
-                          <Button
-                            variant="text"
-                            onClick={() =>
-                              handleConditionalModalOpen(field.name)
-                            }
-                            style={{
-                              textTransform: "capitalize",
-                              fontSize: "12px",
-                              marginRight: "30px",
-                              marginTop: "5px",
-                            }}
-                          >
-                            <EditIcon style={{ marginRight: "5px" }} /> Edit
-                          </Button>
-                        ) : (
-                          ""
-                        )}
-                        {field.name === "RTO / RPO" ||
-                        field.name === "Information Classification" ||
-                        field.name === "Advisory" ? (
-                          <div
-                            style={{
-                              display: "inline",
-                              marginLeft: "95px",
-                            }}
-                          ></div>
-                        ) : (
-                          ""
-                        )}
-                        <Link href="#" onClick={preventDefault}>
-                          {field?.name}
-                        </Link>
-                      </TableCell>
-                      <TableCell align="left">
-                        {field.status === "Self Served" && (
-                          <span
-                            style={{
-                              color: "#0A7CB5",
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                            }}
-                          >
-                            <InfoIcon
-                              style={{
-                                marginRight: "5px",
-                              }}
-                            />
-                            {field.status}
-                          </span>
-                        )}
-                        {field.status === "Completed" && (
-                          <span
-                            style={{
-                              color: "#01579B",
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                            }}
-                          >
-                            <CheckCircleIcon
-                              style={{
-                                marginRight: "5px",
-                              }}
-                            />
-                            {field.status}
-                          </span>
-                        )}
-
-                        {field.status === "Not required" && (
-                          <span
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                            }}
-                          >
-                            <CancelIcon
-                              style={{
-                                marginRight: "5px",
-                              }}
-                            />
-                            {field.status}
-                          </span>
-                        )}
-                        {field.status === "In progress" && (
-                          <span
-                            style={{
-                              color: "#FFAA00",
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                            }}
-                          >
-                            <PlayCircleFilledIcon
-                              style={{
-                                marginRight: "5px",
-                              }}
-                            />
-                            {field.status}
-                          </span>
-                        )}
-                        {field.status === "Not started" && (
-                          <span
-                            style={{
-                              color: "#8894A8",
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                            }}
-                          >
-                            <WatchLaterIcon
-                              style={{
-                                marginRight: "5px",
-                              }}
-                            />
-                            {field.status}
-                          </span>
-                        )}
-                      </TableCell>
-                      <TableCell align="left" style={{ overflow: "hidden" }}>
-                        {field?.rationale}
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        style={{ overflow: "hidden", width: "300px" }}
-                      ></TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-      <Modal
-        open={submissionModalOpen}
-        onClose={handleSubmissionModalClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {submissionBody}
-      </Modal>
-
-      <Modal
-        open={conditionalModalOpen}
-        onClose={handleConditionalModalClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {conditionalBody}
-      </Modal>
-    </React.Fragment>
-  );
-}
-
+// export const CARFCollapsibleTable = ({}:
+// handleSubmissionModalOpen,
+// handleSubmissionModalClose,
+// handleConditionalModalOpen,
+// handleConditionalModalClose,
+// fieldToEdit,
+// editionSuccess,
+// deploymentPatterns,
+// handleEdition,
+// handleSelectChange,
+// isSubmitted,
+// isCompleted,
+// handleSubmission,
 export const CARFCollapsibleTable = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const classes = useRowStyles();
+  // const classes = useRowStyles();
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -722,16 +516,25 @@ export const CARFCollapsibleTable = () => {
   };
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table aria-label='collapsible table'>
         <TableBody>
-          {rows.map((row) => (
+          {/* {rows.map((row) => (
             <Row key={row.name} row={row} />
+          ))} */}
+          {console.log('hola ke ase')}
+          {mySampleObject.tollgates.map((tollgate) => (
+            <Row
+              key={tollgate.name}
+              tollgate={tollgate}
+              // preRequisites={tollgate?.pre_requisites}
+            />
           ))}
+          {mySampleObject.tollgates.map((tollgate) => console.log(tollgate))}
         </TableBody>
       </Table>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
-        component="div"
+        component='div'
         count={rows.length}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -741,3 +544,16 @@ export const CARFCollapsibleTable = () => {
     </TableContainer>
   );
 };
+
+// handleSubmissionModalOpen={handleSubmissionModalOpen}
+// handleSubmissionModalClose={handleSubmissionModalClose}
+// handleConditionalModalOpen={handleConditionalModalOpen}
+// handleConditionalModalClose={handleConditionalModalClose}
+// fieldToEdit={fieldToEdit}
+// editionSuccess={editionSuccess}
+// deploymentPatterns={deploymentPatterns}
+// handleEdition={handleEdition}
+// handleSelectChange={handleSelectChange}
+// isSubmitted={isSubmitted}
+// isCompleted={isCompleted}
+// handleSubmission={handleSubmission}

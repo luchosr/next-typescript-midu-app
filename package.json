@@ -32,5 +32,11 @@
     "recharts": "2.5.0",
     "typescript": "^5.0.4",
     "yarn": "^1.22.19"
+  },
+  "devDependencies": {
+    "msw": "^1.2.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
