@@ -307,16 +307,13 @@ export function Row({ tollgate }: any) {
           >
             {dropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
           </IconButton>
-          {/* ola ke ase{row.name} */}
-          {/* {mySampleObject?.tollgates?.ready_to_build.name} */}
-          {/* {mySampleObject?.tollgates[0].name} */}
           {tollgate.name}
         </TableCell>
 
         <TableCell align='right' className={classes.labelTableCell}></TableCell>
         <TableCell align='right'></TableCell>
         <TableCell align='right'>
-          {tollgate?.pre_requisites.name !== 'Ready to Design' &&
+          {/* {tollgate?.pre_requisites.name !== 'Ready to Design' &&
           !isSubmitted.includes(tollgate?.pre_requisites.name) ? (
             <Button
               variant='contained'
@@ -329,6 +326,25 @@ export function Row({ tollgate }: any) {
             </Button>
           ) : tollgate?.pre_requisites.name !== 'Ready to Design' &&
             isSubmitted.includes(tollgate?.pre_requisites.name) ? (
+            <Button className={classes.submittedButton} disabled={true}>
+              Submitted
+            </Button>
+          ) : (
+            ''
+          )} */}
+          {tollgate?.name !== 'Ready to Design' &&
+          !isSubmitted.includes(tollgate?.name) ? (
+            <Button
+              variant='contained'
+              disabled={!isCompleted.includes(tollgate?.name)}
+              component={'button'}
+              onClick={() => handleSubmission(tollgate?.name)}
+              className={classes.submitButton}
+            >
+              Submit
+            </Button>
+          ) : tollgate?.name !== 'Ready to Design' &&
+            isSubmitted.includes(tollgate?.name) ? (
             <Button className={classes.submittedButton} disabled={true}>
               Submitted
             </Button>
@@ -385,11 +401,6 @@ export function Row({ tollgate }: any) {
                           'Cloud Product Registration & Cloud Product Check' ? (
                           <Button
                             variant='text'
-                            // onClick={() =>
-                            //   handleConditionalModalOpen(
-                            //     tollgate?.pre_requisites.name
-                            //   )
-                            // }
                             onClick={() =>
                               handleConditionalModalOpen(field.name)
                             }
