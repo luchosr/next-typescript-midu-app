@@ -52,9 +52,6 @@ const useStyles = makeStyles((theme) =>
     withoutLabel: {
       marginTop: theme.spacing(3),
     },
-    textField: {
-      // width: "25ch",
-    },
     homeButton: {
       display: 'flex',
       flexDirection: 'row',
@@ -72,19 +69,9 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-// interface State {
-//   amount: string;
-//   password: string;
-//   weight: string;
-//   weightRange: string;
-//   showPassword: boolean;
-// }
-
 export function InputAdornments() {
   const classes = useStyles();
   const [value, setValue] = useState<string>('');
-  // const [editionSuccess, setEditionSuccess] = React.useState(false);
-  // const [submissionModalOpen, setSubmissionModalOpen] = React.useState(false);
 
   const appCharacteristicsArray = [
     'NAR ID',

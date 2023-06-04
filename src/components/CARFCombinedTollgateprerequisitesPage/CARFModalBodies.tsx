@@ -5,13 +5,11 @@ import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
-// import { useAppContext } from './CARFStore/storeProvider';
 
 import {
   FormControl,
   InputLabel,
   MenuItem,
-  Modal,
   Select,
   TextField,
 } from '@mui/material';
@@ -194,7 +192,9 @@ conditionalBodyProps) => {
       setDeploymentPatterns({
         ...deploymentPatterns,
         comment: text,
+        status: 'Completed',
       });
+    console.log('deployment patterns es :', deploymentPatterns);
   };
 
   const handleSaveButton = () => {
@@ -256,15 +256,11 @@ conditionalBodyProps) => {
       setAuditingLogging({
         ...auditingLogging,
         url: urlData,
-
         status: 'Completed',
       });
     fieldToEdit === 'Deployment Patterns' &&
       setDeploymentPatterns({
         ...deploymentPatterns,
-        // all_deployment_patterns_implemented: deploymentPatternsCheck,
-
-        status: 'Completed',
       });
 
     // setInputValue(value);
@@ -452,7 +448,7 @@ conditionalBodyProps) => {
                       setEkmVerification({
                         ...ekmVerification,
                         confluence_url: e.target.value,
-                        status: 'Complete',
+                        status: 'Completed',
                       })
                     }
                     helperText='Mandatory'
@@ -535,21 +531,8 @@ conditionalBodyProps) => {
                   style={{ margin: '0 20px' }}
                   color='primary'
                   // disabled={!linkUrl}
-                  // onClick={editionHandler}
-                  // onClick={() => console.log(`${fieldToEdit}.input`)}
-                  // onClick={() =>
-                  //   console.log(inputValue, 'el field es: ', fieldToEdit)
-                  // }
-                  // onClick={handleSave(fieldToEdit, {
-                  //   name: 'Solution Design',
-                  //   url: inputValue,
-                  //   status: 'completado',
-                  //   rationale:
-                  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
-                  //   label: null,
-                  //   comment: 'hola tenes que arreglar los comentarios',
-                  // })}
-                  onClick={() => handleSaveButton(fieldToEdit, inputValue)}
+
+                  onClick={() => handleSaveButton()}
                 >
                   Save
                 </Button>
