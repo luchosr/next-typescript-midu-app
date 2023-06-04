@@ -16,6 +16,7 @@ import {
   TextField,
 } from '@mui/material';
 import { StoreContext } from './CARFStore/storeProvider';
+import { types } from './CARFStore/storeReducer';
 
 interface conditionalBodyProps {
   bodyStyle: any;
@@ -73,9 +74,9 @@ export const ConditionalBody = ({
   editionSuccess,
   // deploymentPatterns,
   editionHandler,
-  selectChangeHandler,
-  handleSave,
-}: conditionalBodyProps) => {
+}: // selectChangeHandler,
+// handleSave,
+conditionalBodyProps) => {
   const [inputValue, setInputValue] = React.useState('');
   // const { updateTollgates, updateSolutionDesign } = useAppContext();
   const [store, dispatch] = useContext(StoreContext);
@@ -108,6 +109,12 @@ export const ConditionalBody = ({
   //   files_url: store.tollgates[2].pre_requisites[2].files_url,
   // });
 
+  const updatedTollgatesDispatcher = (updatedTollgates: any) => {
+    dispatch({
+      type: types.updateTollgates,
+      payload: updatedTollgates,
+    });
+  };
   const handleTollgates = (
     solutionDesign: any,
     cloudProdReg: any,
@@ -116,7 +123,29 @@ export const ConditionalBody = ({
     auditingLogging: any,
     ekmVerification: any
   ) => {
-    console.log('EL tollgate final queda: ', [
+    // console.log('EL tollgate final queda: ', [
+    //   {
+    //     name: 'Ready to Design',
+    //     pre_requisites: [store.tollgates[0].pre_requisites[0]],
+    //   },
+    //   {
+    //     name: 'Ready to Build',
+    //     pre_requisites: [
+    //       store.tollgates[1].pre_requisites[0],
+    //       store.tollgates[1].pre_requisites[1],
+    //       store.tollgates[1].pre_requisites[2],
+    //       solutionDesign,
+    //       cloudProdReg,
+    //       deploymentPatterns,
+    //       store.tollgates[1].pre_requisites[6],
+    //     ],
+    //   },
+    //   {
+    //     name: 'Ready to Release',
+    //     pre_requisites: [resiliencyMeasures, auditingLogging, ekmVerification],
+    //   },
+    // ]);
+    updatedTollgatesDispatcher([
       {
         name: 'Ready to Design',
         pre_requisites: [store.tollgates[0].pre_requisites[0]],
@@ -168,23 +197,52 @@ export const ConditionalBody = ({
       });
   };
 
-  const handleSaveButton = (
-    fieldToEdit: string,
-    urlData: string
-    // commentData: string
-  ) => {
+  const handleSaveButton = () => {
+    editionHandler();
+    handleTollgates(
+      solutionDesign,
+      cloudProdReg,
+      deploymentPatterns,
+      resiliencyMeasures,
+      auditingLogging,
+      ekmVerification
+    );
+  };
+
+  // console.log('EL tollgate final queda: ', [
+  //   {
+  //     name: 'Ready to Design',
+  //     pre_requisites: [store.tollgates[0].pre_requisites[0]],
+  //   },
+  //   {
+  //     name: 'Ready to Build',
+  //     pre_requisites: [
+  //       store.tollgates[1].pre_requisites[0],
+  //       store.tollgates[1].pre_requisites[1],
+  //       store.tollgates[1].pre_requisites[2],
+  //       solutionDesign,
+  //       cloudProdReg,
+  //       deploymentPatterns,
+  //       store.tollgates[1].pre_requisites[6],
+  //     ],
+  //   },
+  //   {
+  //     name: 'Ready to Release',
+  //     pre_requisites: [resiliencyMeasures, auditingLogging, ekmVerification],
+  //   },
+  // ]);
+  // console.log('el nuevo solution design es: ', solutionDesign);
+  const handleInputValue = (urlData: string, fieldToEdit: string) => {
     fieldToEdit === 'Solution Design' &&
       setSolutionDesign({
         ...solutionDesign,
         url: urlData,
-
         status: 'Completed',
       });
     fieldToEdit === 'Cloud Product Registration & Cloud Product Check' &&
       setCloudProdReg({
         ...cloudProdReg,
         url: urlData,
-
         status: 'Completed',
       });
     fieldToEdit === 'Resiliency Measure Test Results' &&
@@ -209,43 +267,8 @@ export const ConditionalBody = ({
         status: 'Completed',
       });
 
-    handleTollgates(
-      solutionDesign,
-      cloudProdReg,
-      deploymentPatterns,
-      resiliencyMeasures,
-      auditingLogging,
-      ekmVerification
-    );
-    editionHandler();
-  };
-
-  console.log('EL tollgate final queda: ', [
-    {
-      name: 'Ready to Design',
-      pre_requisites: [store.tollgates[0].pre_requisites[0]],
-    },
-    {
-      name: 'Ready to Build',
-      pre_requisites: [
-        store.tollgates[1].pre_requisites[0],
-        store.tollgates[1].pre_requisites[1],
-        store.tollgates[1].pre_requisites[2],
-        solutionDesign,
-        cloudProdReg,
-        deploymentPatterns,
-        store.tollgates[1].pre_requisites[6],
-      ],
-    },
-    {
-      name: 'Ready to Release',
-      pre_requisites: [resiliencyMeasures, auditingLogging, ekmVerification],
-    },
-  ]);
-  // console.log('el nuevo solution design es: ', solutionDesign);
-  const handleInputValue = (value: string) => {
-    setInputValue(value);
-    console.log('el input value es: ', inputValue);
+    // setInputValue(value);
+    // console.log('el input value es: ', inputValue);
   };
   // console.log('el deployment patterns check es: ', deploymentPatternsCheck);
   console.log('el store es: ', store);
@@ -373,7 +396,9 @@ export const ConditionalBody = ({
                     label={fieldToEdit}
                     defaultValue=''
                     placeholder='please introduce a proper URL'
-                    onChange={(e) => handleInputValue(e.target.value)}
+                    onChange={(e) =>
+                      handleInputValue(e.target.value, fieldToEdit)
+                    }
                     autoComplete='off'
                     // value={}
                     variant='outlined'
@@ -427,6 +452,7 @@ export const ConditionalBody = ({
                       setEkmVerification({
                         ...ekmVerification,
                         confluence_url: e.target.value,
+                        status: 'Complete',
                       })
                     }
                     helperText='Mandatory'
