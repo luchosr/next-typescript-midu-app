@@ -72,103 +72,20 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-interface State {
-  amount: string;
-  password: string;
-  weight: string;
-  weightRange: string;
-  showPassword: boolean;
-}
+// interface State {
+//   amount: string;
+//   password: string;
+//   weight: string;
+//   weightRange: string;
+//   showPassword: boolean;
+// }
 
 export function InputAdornments() {
   const classes = useStyles();
-  // const [keyword, setKeyword] = useState<string>('');
   const [value, setValue] = useState<string>('');
-  // const [inputText, setInputText] = useState<string>('');
-  // const [values, setValues] = useState<State>({
-  //   amount: '',
-  //   password: '',
-  //   weight: '',
-  //   weightRange: '',
-  //   showPassword: false,
-  // });
-  const [fieldToEdit, setFieldToEdit] = React.useState('');
-  const [narIdObject, setNarIdObject] = React.useState({});
-  const [isCompleted, setIsCompleted] = React.useState(['Ready to Build']);
-  const [isSubmitted, setIsSubmitted] = React.useState<string[]>([]);
-  const [editionSuccess, setEditionSuccess] = React.useState(false);
-  // const [dropdownOpen, setDropdownOpen] = React.useState(false);
-  const [submissionModalOpen, setSubmissionModalOpen] = React.useState(false);
-  const [conditionalModalOpen, setConditionalModalOpen] = React.useState(false);
-  const [deploymentPatterns, setDeploymentPatterns] = React.useState('yes');
-  // const [modalStyle] = React.useState(getModalStyle);
-  // const classes = useRowStyles();
-  // const preventDefault = (event: React.SyntheticEvent) =>
-  //   event.preventDefault();
+  // const [editionSuccess, setEditionSuccess] = React.useState(false);
+  // const [submissionModalOpen, setSubmissionModalOpen] = React.useState(false);
 
-  const handleEdition = () => {
-    setEditionSuccess(!editionSuccess);
-  };
-  const handleConditionalModalOpen = (editingField: string) => {
-    setFieldToEdit(editingField);
-    setConditionalModalOpen(true);
-    setEditionSuccess(false);
-  };
-
-  const handleConditionalModalClose = () => {
-    setConditionalModalOpen(false);
-  };
-
-  const urlInputHandler = (preReq: string, value: string) => {
-    const newNarIdObject: object = { ...narIdObject };
-    // @ts-ignore
-    newNarIdObject.preReq.url = value;
-    setNarIdObject(newNarIdObject);
-  };
-
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const deploymentPatternsSelect = event.target.value;
-    setDeploymentPatterns(deploymentPatternsSelect);
-  };
-
-  const handleSubmissionModalOpen = () => {
-    setSubmissionModalOpen(true);
-  };
-  const handleSubmissionModalClose = () => {
-    setSubmissionModalOpen(false);
-  };
-  const handleSubmission = (rowName: any) => {
-    const submissions = [...isSubmitted, rowName];
-    setIsSubmitted(submissions);
-    handleSubmissionModalOpen();
-    console.log('Is submitted es: ', isSubmitted);
-  };
-
-  // const handleChange =
-  //   (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     setValues({ ...values, [prop]: event.target.value });
-  //   };
-
-  // const handleClickShowPassword = () => {
-  //   setValues({ ...values, showPassword: !values.showPassword });
-  // };
-
-  // const handleMouseDownPassword = (
-  //   event: React.MouseEvent<HTMLButtonElement>
-  // ) => {
-  //   event.preventDefault();
-  // };
-
-  // const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const lowerCase = e.target.value.toLowerCase();
-  //   setInputText(lowerCase);
-  // };
-
-  // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (event.key === 'Enter') {
-  //     console.log(value);
-  //   }
-  // };
   const appCharacteristicsArray = [
     'NAR ID',
     'Application Name',
@@ -328,23 +245,7 @@ export function InputAdornments() {
         </Accordion>
         <hr style={{ color: '#DEE1E7' }} />
         <CARFCollapsibleTable />
-        {/* <CARFCollapsibleTable
-      // handleSubmissionModalOpen={handleSubmissionModalOpen}
-      // handleSubmissionModalClose={handleSubmissionModalClose}
-      // handleConditionalModalOpen={handleConditionalModalOpen}
-      // handleConditionalModalClose={handleConditionalModalClose}
-      // fieldToEdit={fieldToEdit}
-      // editionSuccess={editionSuccess}
-      // deploymentPatterns={deploymentPatterns}
-      // handleEdition={handleEdition}
-      // handleSelectChange={handleSelectChange}
-      // isSubmitted={isSubmitted}
-      // isCompleted={isCompleted}
-      // handleSubmission={handleSubmission}
-      /> */}
       </div>
     </StoreProvider>
   );
 }
-
-export default InputAdornments;

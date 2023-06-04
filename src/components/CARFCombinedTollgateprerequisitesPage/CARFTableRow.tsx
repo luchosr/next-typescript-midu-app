@@ -36,7 +36,7 @@ import {
 //   };
 // }
 
-export function Row({ tollgate, handleSave }: any) {
+export function Row({ tollgate }: any) {
   // const { row } = props;
   const [fieldToEdit, setFieldToEdit] = React.useState('');
   const [narIdObject, setNarIdObject] = React.useState({});
