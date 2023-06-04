@@ -502,6 +502,18 @@ import { Row } from './CARFTableRow';
 export const CARFCollapsibleTable = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [globalTollgate, setGlobalTollgate] = React.useState(
+    mySampleObject.tollgates
+  );
+  const [solutionDesign, setSolutionDesign] = React.useState(
+    mySampleObject.tollgates[1]?.pre_requisites[3]
+  );
+
+  const handleSave = (preReq: any, value: any) => {
+    preReq === 'Solution Design' && setSolutionDesign(value);
+  };
+
+  console.log('solution design es: ', solutionDesign);
   // const classes = useRowStyles();
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -518,18 +530,14 @@ export const CARFCollapsibleTable = () => {
     <TableContainer component={Paper}>
       <Table aria-label='collapsible table'>
         <TableBody>
-          {/* {rows.map((row) => (
-            <Row key={row.name} row={row} />
-          ))} */}
-          {console.log('hola ke ase')}
           {mySampleObject.tollgates.map((tollgate) => (
             <Row
               key={tollgate.name}
               tollgate={tollgate}
+              handleSave={handleSave}
               // preRequisites={tollgate?.pre_requisites}
             />
           ))}
-          {mySampleObject.tollgates.map((tollgate) => console.log(tollgate))}
         </TableBody>
       </Table>
       <TablePagination

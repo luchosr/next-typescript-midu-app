@@ -142,6 +142,7 @@ export const mySampleObject = {
         },
         {
           name: 'Solution Design',
+          url: 'google.com',
           status: 'In progress',
           rationale:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
@@ -150,6 +151,7 @@ export const mySampleObject = {
         },
         {
           name: 'Cloud Product Registration & Cloud Product Check',
+          url: 'google.com cloud product',
           status: 'Not started',
           rationale:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
@@ -180,6 +182,7 @@ export const mySampleObject = {
         {
           name: 'Resiliency Measure Test Results',
           status: 'Not started',
+          url: 'google.com resiliency',
           rationale:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
           label: null,
@@ -188,6 +191,7 @@ export const mySampleObject = {
         {
           name: 'Auditing, Logging, Monitoring, Alerting Metrics',
           status: 'Not required',
+          url: 'google.com auditing',
           rationale:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
           label: null,
@@ -206,4 +210,61 @@ export const mySampleObject = {
       ],
     },
   ],
+};
+
+const tollgates2 = {
+  ready_to_design: {
+    name: 'Ready to Design',
+    pre_requisites: {
+      advisory: {
+        name: 'Advisory',
+        status: 'Self Served',
+        rationale:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
+        label: null,
+      },
+    },
+  },
+  ready_to_build: {
+    name: 'Ready to Build',
+    pre_requisites: {
+      ready_to_build_survey: {
+        name: 'Ready to Build Survey',
+        status: 'Completed',
+        rationale:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
+        label: null,
+      },
+      rto_rpo: {
+        name: 'RTO / RPO',
+        status: 'Completed',
+        rationale:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
+        label: null,
+      },
+      information_classification: {
+        name: 'Information Classification',
+        status: 'In progress',
+        rationale:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
+        label: null,
+      },
+      solution_design: {
+        name: 'Solution Design',
+        status: 'In progress',
+        rationale:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
+        label: null,
+        comment: '',
+      },
+      cloud_product_registration_cloud_product_check: {
+        name: 'Cloud Product Registration & Cloud Product Check',
+        status: 'Not started',
+        rationale:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
+        comment: '',
+        label: ['Not Storing EU Personal Data', 'Low Risk EU Personal Data'],
+      },
+    },
+  },
 };
