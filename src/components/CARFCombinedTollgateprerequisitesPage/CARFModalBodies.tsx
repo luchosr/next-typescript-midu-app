@@ -4,7 +4,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 import {
   FormControl,
@@ -25,7 +24,6 @@ interface conditionalBodyProps {
   editionHandler: any;
   deploymentPatterns: string;
   selectChangeHandler: any;
-  handleSave: any;
 }
 interface submissionBodyProps {
   bodyStyle: any;
@@ -37,8 +35,7 @@ export const SubmissionBody = ({
   bodyStyle,
   bodyClassName,
   clickHandler,
-}: // handleSave,
-submissionBodyProps) => {
+}: submissionBodyProps) => {
   return (
     <div style={bodyStyle} className={bodyClassName}>
       <div
@@ -70,16 +67,13 @@ export const ConditionalBody = ({
   clickHandler,
   fieldToEdit,
   editionSuccess,
-  // deploymentPatterns,
   editionHandler,
-}: // selectChangeHandler,
-// handleSave,
-conditionalBodyProps) => {
-  const [inputValue, setInputValue] = React.useState('');
-  // const { updateTollgates, updateSolutionDesign } = useAppContext();
+}: conditionalBodyProps) => {
+  // const [inputValue, setInputValue] = React.useState('');
   const [store, dispatch] = useContext(StoreContext);
-  const [stateTollgates, setStateTollgates] = React.useState(store.tollgates);
-  const [textAreaComment, setTextAreaComment] = React.useState('');
+  // const [stateTollgates, setStateTollgates] = React.useState(store.tollgates);
+  // const [textAreaComment, setTextAreaComment] = React.useState('');
+  const [isSaveButtonDisabled, setIsSaveButtonDisabled] = React.useState(false);
 
   const [solutionDesign, setSolutionDesign] = React.useState(
     store.tollgates[1].pre_requisites[3]
@@ -96,16 +90,11 @@ conditionalBodyProps) => {
   const [ekmVerification, setEkmVerification] = React.useState(
     store.tollgates[2].pre_requisites[2]
   );
-  const [deploymentPatternsCheck, setDeploymentPatternsCheck] =
-    React.useState('yes');
+  // const [deploymentPatternsCheck, setDeploymentPatternsCheck] =
+  //   React.useState('yes');
   const [deploymentPatterns, setDeploymentPatterns] = React.useState(
     store.tollgates[1].pre_requisites[5]
   );
-  // const [ekmInput, setEkmInput] = React.useState({
-  //   confluence_url: store.tollgates[2].pre_requisites[2].confluence_url,
-  //   comment: store.tollgates[2].pre_requisites[2].comment,
-  //   files_url: store.tollgates[2].pre_requisites[2].files_url,
-  // });
 
   const updatedTollgatesDispatcher = (updatedTollgates: any) => {
     dispatch({
@@ -121,28 +110,6 @@ conditionalBodyProps) => {
     auditingLogging: any,
     ekmVerification: any
   ) => {
-    // console.log('EL tollgate final queda: ', [
-    //   {
-    //     name: 'Ready to Design',
-    //     pre_requisites: [store.tollgates[0].pre_requisites[0]],
-    //   },
-    //   {
-    //     name: 'Ready to Build',
-    //     pre_requisites: [
-    //       store.tollgates[1].pre_requisites[0],
-    //       store.tollgates[1].pre_requisites[1],
-    //       store.tollgates[1].pre_requisites[2],
-    //       solutionDesign,
-    //       cloudProdReg,
-    //       deploymentPatterns,
-    //       store.tollgates[1].pre_requisites[6],
-    //     ],
-    //   },
-    //   {
-    //     name: 'Ready to Release',
-    //     pre_requisites: [resiliencyMeasures, auditingLogging, ekmVerification],
-    //   },
-    // ]);
     updatedTollgatesDispatcher([
       {
         name: 'Ready to Design',
@@ -191,12 +158,18 @@ conditionalBodyProps) => {
     fieldToEdit === 'Deployment Patterns' &&
       setDeploymentPatterns({
         ...deploymentPatterns,
-        comment: text,
+        rationale_comment: text,
         status: 'Completed',
       });
     console.log('deployment patterns es :', deploymentPatterns);
   };
-
+  const handleSaveButtonValidation = (fieldToEdit: string) => {
+    fieldToEdit === 'Deployment Patterns' &&
+    deploymentPatterns.all_deployment_patterns_implemented === 'no' &&
+    deploymentPatterns.rationale_comment === ''
+      ? setIsSaveButtonDisabled(true)
+      : setIsSaveButtonDisabled(false);
+  };
   const handleSaveButton = () => {
     editionHandler();
     handleTollgates(
@@ -209,29 +182,25 @@ conditionalBodyProps) => {
     );
   };
 
-  // console.log('EL tollgate final queda: ', [
-  //   {
-  //     name: 'Ready to Design',
-  //     pre_requisites: [store.tollgates[0].pre_requisites[0]],
-  //   },
-  //   {
-  //     name: 'Ready to Build',
-  //     pre_requisites: [
-  //       store.tollgates[1].pre_requisites[0],
-  //       store.tollgates[1].pre_requisites[1],
-  //       store.tollgates[1].pre_requisites[2],
-  //       solutionDesign,
-  //       cloudProdReg,
-  //       deploymentPatterns,
-  //       store.tollgates[1].pre_requisites[6],
-  //     ],
-  //   },
-  //   {
-  //     name: 'Ready to Release',
-  //     pre_requisites: [resiliencyMeasures, auditingLogging, ekmVerification],
-  //   },
-  // ]);
-  // console.log('el nuevo solution design es: ', solutionDesign);
+  const handleDeploymentPatternsCheck = (eventValue: any) => {
+    setDeploymentPatterns({
+      ...deploymentPatterns,
+      all_deployment_patterns_implemented: eventValue,
+      status: 'Completed',
+    });
+    eventValue === 'no'
+      ? setIsSaveButtonDisabled(true)
+      : setIsSaveButtonDisabled(false);
+  };
+
+  const handleDeploymentPatternsTextArea = (textValue: string) => {
+    setDeploymentPatterns({
+      ...deploymentPatterns,
+      rationale_comment: textValue,
+    });
+    setIsSaveButtonDisabled(false);
+  };
+
   const handleInputValue = (urlData: string, fieldToEdit: string) => {
     fieldToEdit === 'Solution Design' &&
       setSolutionDesign({
@@ -262,11 +231,7 @@ conditionalBodyProps) => {
       setDeploymentPatterns({
         ...deploymentPatterns,
       });
-
-    // setInputValue(value);
-    // console.log('el input value es: ', inputValue);
   };
-  // console.log('el deployment patterns check es: ', deploymentPatternsCheck);
   console.log('el store es: ', store);
   return (
     <div>
@@ -288,7 +253,6 @@ conditionalBodyProps) => {
             }}
             onClick={clickHandler}
           >
-            {/* <CloseIcon style={{ position: 'absolute', top: 0, left: 50 }} /> */}
             <CloseIcon />
           </span>
         </div>
@@ -296,21 +260,21 @@ conditionalBodyProps) => {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'center',
+            marginLeft: 20,
           }}
         >
           {fieldToEdit === 'Deployment Patterns' ? (
             <h3>
-              Confirm if design implements all relevant Deployment Patterns
+              {!editionSuccess &&
+                `Confirm if design implements all relevant Deployment Patterns`}
             </h3>
           ) : (
             <h2 id='simple-modal-title'>
-              {!editionSuccess && 'Edit'} {fieldToEdit}
+              {!editionSuccess && `Edit ${fieldToEdit}`}
+              {/* {fieldToEdit} */}
             </h2>
           )}
         </div>
-
-        {/* <form style={{ marginLeft: '20px', marginTop: '30px' }}> */}
         <form style={{ marginLeft: '20px', marginTop: '0px' }}>
           {editionSuccess === false ? (
             <div
@@ -325,55 +289,67 @@ conditionalBodyProps) => {
               }}
             >
               {fieldToEdit === 'Deployment Patterns' && (
-                <form style={{ width: '75%' }}>
+                <form style={{ width: '100%' }}>
                   <FormControl
                     variant='outlined'
-                    // className={classes.formControl}
                     style={{
-                      width: '70%',
-                      display: 'block',
+                      width: '90%',
                     }}
                   >
-                    <InputLabel id='demo-simple-select-outlined-label'>
-                      Deployment Patterns
-                    </InputLabel>
-                    <Select
-                      labelId='demo-simple-select-outlined-label'
-                      id='deployment-patterns'
-                      style={{ width: '120%' }}
-                      value={
-                        deploymentPatterns.all_deployment_patterns_implemented
-                      }
-                      // @ts-ignore
-                      // onChange={selectChangeHandler}
-                      // onChange={(e) =>
-                      //   setDeploymentPatternsCheck(e.target.value)
-                      // }
-                      onChange={(e) =>
-                        setDeploymentPatterns({
-                          ...deploymentPatterns,
-                          all_deployment_patterns_implemented: e.target.value,
-                        })
-                      }
-                      label='Deployment Patterns'
-                      inputProps={{
-                        deploymentPatterns: deploymentPatterns,
-                        id: 'outlined-age-native-simple',
-                      }}
-                    >
-                      <MenuItem value={'yes'}>
-                        Yes - the design implements ALL relevant deployment
-                        patterns
-                      </MenuItem>
-                      <MenuItem value={'no'}>
-                        No - the design DOES NOT implement ALL of the deployment
-                        patterns
-                      </MenuItem>
-                    </Select>
-                    <FormHelperText>
-                      If no, provide the rationale why in the comments section
-                    </FormHelperText>
-
+                    {' '}
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <div style={{ width: '100%' }}>
+                        <InputLabel id='demo-simple-select-outlined-label'>
+                          Deployment Patterns
+                        </InputLabel>
+                        <Select
+                          labelId='demo-simple-select-outlined-label'
+                          id='deployment-patterns'
+                          style={{ width: '500px' }}
+                          onChange={(e) =>
+                            handleDeploymentPatternsCheck(e.target.value)
+                          }
+                          label='Deployment Patterns'
+                          inputProps={{
+                            deploymentPatterns: deploymentPatterns,
+                            id: 'outlined-age-native-simple',
+                          }}
+                        >
+                          <MenuItem value={'yes'}>
+                            Yes - the design implements ALL relevant deployment
+                            patterns
+                          </MenuItem>
+                          <MenuItem value={'no'}>
+                            No - the design DOES NOT implement ALL of the
+                            deployment patterns
+                          </MenuItem>
+                        </Select>
+                        <FormHelperText>
+                          If no, provide the rationale why in the comments
+                          section
+                        </FormHelperText>
+                      </div>
+                      <TextareaAutosize
+                        aria-label='empty textarea'
+                        minRows={4}
+                        placeholder='leave a comment'
+                        // onChange={(e) =>
+                        //   console.log(e.target.value, 'el field es :', fieldToEdit)
+                        // }
+                        // onChange={(e) =>
+                        //   handleTextArea(fieldToEdit, e.target.value)
+                        // }
+                        onChange={(e) =>
+                          handleDeploymentPatternsTextArea(e.target.value)
+                        }
+                        style={{
+                          borderColor: 'lightgray',
+                          borderRadius: 5,
+                          height: '50px',
+                          marginLeft: '20px',
+                        }}
+                      />
+                    </div>
                     <h4>Solution Design (URL)</h4>
                     <Link>
                       https://confluence.intranet.db.com/display/GMRR/Evidence_Docs_sdd_exitplanV2
@@ -383,33 +359,154 @@ conditionalBodyProps) => {
                       will be null
                     </FormHelperText>
                   </FormControl>
+                  <div
+                    style={{
+                      marginTop: 50,
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'flex-end',
+                      width: '90%',
+                    }}
+                  >
+                    <div>
+                      <Button
+                        variant='contained'
+                        style={{ margin: '0 20px' }}
+                        color='primary'
+                        disabled={isSaveButtonDisabled}
+                        onClick={() => handleSaveButton()}
+                      >
+                        Save
+                      </Button>
+                      <Button
+                        variant='contained'
+                        style={{ backgroundColor: '#FFFF', color: 'black' }}
+                        onClick={clickHandler}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
                 </form>
               )}
-              {fieldToEdit !== 'EKM Verification & Evidencing' &&
+
+              {fieldToEdit === 'Solution Design' ||
+              fieldToEdit === 'Resiliency Measure Test Results' ||
+              fieldToEdit ===
+                'Auditing, Logging, Monitoring, Alerting Metrics' ? (
+                <div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      // border: '1px solid red',
+                    }}
+                  >
+                    <TextField
+                      id={fieldToEdit}
+                      label={fieldToEdit}
+                      defaultValue=''
+                      placeholder='please introduce a proper URL'
+                      onChange={(e) =>
+                        handleInputValue(e.target.value, fieldToEdit)
+                      }
+                      autoComplete='off'
+                      // value={}
+                      variant='outlined'
+                      style={{ width: '500px' }}
+                    />
+                    <TextareaAutosize
+                      aria-label='empty textarea'
+                      minRows={4}
+                      placeholder='leave a comment'
+                      onChange={(e) =>
+                        handleTextArea(fieldToEdit, e.target.value)
+                      }
+                      style={{
+                        borderColor: 'lightgray',
+                        borderRadius: 5,
+                        height: '50px',
+                        marginLeft: '20px',
+                      }}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      marginTop: 50,
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'flex-end',
+                      width: '100%',
+                    }}
+                  >
+                    <div>
+                      <Button
+                        variant='contained'
+                        style={{ margin: '0 20px' }}
+                        color='primary'
+                        // disabled={!isSaveButtonDisabled}
+                        onClick={() => handleSaveButton()}
+                      >
+                        Save
+                      </Button>
+                      <Button
+                        variant='contained'
+                        style={{ backgroundColor: '#FFFF', color: 'black' }}
+                        onClick={clickHandler}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ''
+              )}
+              {/* {fieldToEdit !== 'EKM Verification & Evidencing' &&
                 fieldToEdit !== 'Deployment Patterns' && (
-                  <TextField
-                    id={fieldToEdit}
-                    label={fieldToEdit}
-                    defaultValue=''
-                    placeholder='please introduce a proper URL'
-                    onChange={(e) =>
-                      handleInputValue(e.target.value, fieldToEdit)
-                    }
-                    autoComplete='off'
-                    // value={}
-                    variant='outlined'
-                    style={{ width: '70%' }}
-                  />
-                )}
-              {fieldToEdit === 'Blueprint' ||
+                  <>
+                    {' '}
+                    <TextField
+                      id={fieldToEdit}
+                      label={fieldToEdit}
+                      defaultValue=''
+                      placeholder='please introduce a proper URL'
+                      onChange={(e) =>
+                        handleInputValue(e.target.value, fieldToEdit)
+                      }
+                      autoComplete='off'
+                      // value={}
+                      variant='outlined'
+                      style={{ width: '70%' }}
+                    />
+                    <TextareaAutosize
+                      aria-label='empty textarea'
+                      minRows={4}
+                      placeholder='leave a comment'
+                      // onChange={(e) =>
+                      //   console.log(e.target.value, 'el field es :', fieldToEdit)
+                      // }
+                      onChange={(e) =>
+                        handleTextArea(fieldToEdit, e.target.value)
+                      }
+                      style={{
+                        borderColor: 'lightgray',
+                        borderRadius: 5,
+                        height: '50px',
+                      }}
+                    />
+                  </>
+                )} */}
+              {/* {fieldToEdit === 'Blueprint' ||
               fieldToEdit === 'EKM Verification & Evidencing' ? null : (
                 <TextareaAutosize
                   aria-label='empty textarea'
                   minRows={4}
                   placeholder='leave a comment'
-                  // onChange={(e) =>
-                  //   console.log(e.target.value, 'el field es :', fieldToEdit)
-                  // }
+       
                   onChange={(e) => handleTextArea(fieldToEdit, e.target.value)}
                   style={{
                     borderColor: 'lightgray',
@@ -417,91 +514,7 @@ conditionalBodyProps) => {
                     height: '50px',
                   }}
                 />
-              )}
-              {fieldToEdit === 'EKM Verification & Evidencing' && (
-                <div style={{ overflow: 'hidden' }}>
-                  <p>
-                    Step A: Run the report{' '}
-                    <a href='shortcut.db.com/EKMReport'>
-                      shortcut.db.com/EKMReport
-                    </a>{' '}
-                    and action (if required) any steps to amend your EKM / LZ
-                    configuration as per{' '}
-                    <a href='shortcut.db.com/EKMGuide '>
-                      shortcut.db.com/EKMGuide
-                    </a>
-                  </p>
-                  <p>
-                    Step B: Export the report. Save in a confluence page.
-                    Provide the URL of the confluence page below
-                  </p>
-                  <TextField
-                    id={fieldToEdit}
-                    label={''}
-                    // defaultValue=''
-                    placeholder='paste confluence URL here'
-                    autoComplete='off'
-                    variant='outlined'
-                    style={{ width: '90%' }}
-                    value={ekmVerification.confluence_url}
-                    onChange={(e) =>
-                      setEkmVerification({
-                        ...ekmVerification,
-                        confluence_url: e.target.value,
-                        status: 'Completed',
-                      })
-                    }
-                    helperText='Mandatory'
-                  />
-                  <p>
-                    Step C: Provide any commentary / attestation required to
-                    explain / cover potential gaps highlighted in the report
-                  </p>
-
-                  <TextareaAutosize
-                    aria-label='empty textarea'
-                    minRows={4}
-                    placeholder='Comment2'
-                    style={{
-                      borderColor: 'lightgray',
-                      borderRadius: 5,
-                      height: '50px',
-                      width: '90%',
-                    }}
-                    value={ekmVerification.comment}
-                    onChange={(e) =>
-                      setEkmVerification({
-                        ...ekmVerification,
-                        comment: e.target.value,
-                      })
-                    }
-                  />
-                  <p>
-                    Step D: If any files or other sources are required to
-                    enhance the details provided in Step C, please provide a URL
-                    to these
-                  </p>
-
-                  <TextareaAutosize
-                    aria-label='empty textarea'
-                    minRows={4}
-                    placeholder='Comment 1'
-                    style={{
-                      borderColor: 'lightgray',
-                      borderRadius: 5,
-                      height: '50px',
-                      width: '90%',
-                    }}
-                    value={ekmVerification.files_url}
-                    onChange={(e) =>
-                      setEkmVerification({
-                        ...ekmVerification,
-                        files_url: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-              )}
+              )} */}
             </div>
           ) : (
             <div
@@ -517,7 +530,7 @@ conditionalBodyProps) => {
             </div>
           )}
 
-          <div
+          {/* <div
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -530,8 +543,7 @@ conditionalBodyProps) => {
                   variant='contained'
                   style={{ margin: '0 20px' }}
                   color='primary'
-                  // disabled={!linkUrl}
-
+                  // disabled={!isSaveButtonDisabled}
                   onClick={() => handleSaveButton()}
                 >
                   Save
@@ -547,7 +559,7 @@ conditionalBodyProps) => {
             ) : (
               ''
             )}
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

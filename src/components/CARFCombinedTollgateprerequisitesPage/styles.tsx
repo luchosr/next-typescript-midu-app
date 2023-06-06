@@ -64,20 +64,20 @@ export const useRowStyles = makeStyles((theme: Theme) =>
     waltzPreReqLink: {
       textTransform: 'capitalize',
       fontSize: '12px',
-      marginRight: '37px',
+      marginRight: '34px',
       color: 'black',
-      marginLeft: '5px',
+      marginLeft: '18px',
       lineHeight: '2.5',
     },
     editButton: {
-      textTransform: 'capitalize',
+      textTransform: 'capitalize!important' as any,
       fontSize: '12px',
       marginRight: '30px',
       marginTop: '5px',
     },
     preReqWhitespace: {
       display: 'inline',
-      marginLeft: '95px',
+      marginLeft: '76px',
     },
     selfServedStatus: {
       color: '#0A7CB5',
@@ -109,7 +109,7 @@ export const useRowStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
     },
     statusIcon: {
-      marginRight: '5px',
+      marginRight: '5px!important',
     },
   })
 );

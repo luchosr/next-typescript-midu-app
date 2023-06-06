@@ -47,7 +47,7 @@ export const initialStore = {
         },
         {
           name: 'Information Classification',
-          status: 'In progress',
+          status: 'Completed',
           rationale:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor',
           label: null,
@@ -123,38 +123,6 @@ export const initialStore = {
     },
   ],
 };
-
-// export const appReducer = (state, action) => {
-//   const { type, payload } = action;
-
-//   switch (type) {
-
-//     case 'UPDATE_TOLLGATES':
-//       console.log('UPDATE_TOLLGATES', payload);
-//       return {
-//         ...state,
-//         tollgates: payload,
-//       };
-//     case 'UPDATE_SOLUTION_DESIGN':
-//       console.log('UPDATE_SOLUTION_DESIGN', payload);
-
-//       return {
-//         ...state,
-//         tollgates: payload,
-//       };
-//     default:
-//       throw new Error("Error: there's no action related to this");
-//   }
-// };
-
-// tollgates[1].pre_requisites[3].name
-
-// let myEstado = {
-//   name: 'el estado',
-//   tollgates: [{ name: 'tolgate name', status: 'completado' }],
-// };
-
-// let tolgate2: [{ name: 'soy un nuevo tollgate'; status: 'testeando' }];
 
 export const types = {
   updateApp: 'UPDATE_APP',

@@ -1,5 +1,4 @@
 import React from 'react';
-import { rows, createData, Fields, mySampleObject } from './mockedData';
 import { getModalStyle, useRowStyles } from './styles';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import EditIcon from '@material-ui/icons/Edit';
@@ -10,7 +9,6 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import { SubmissionBody, ConditionalBody } from './CARFModalBodies';
-// import { useAppContext } from './CARFStore/storeProvider';
 
 import {
   Box,
@@ -47,11 +45,12 @@ export function Row({ tollgate }: any) {
   const [submissionModalOpen, setSubmissionModalOpen] = React.useState(false);
   const [conditionalModalOpen, setConditionalModalOpen] = React.useState(false);
   const [isDeploymentPatterns, setIsDeploymentPatterns] = React.useState('yes');
+  const [submissionCounter, setSubmissionCounter] = React.useState(0);
   // const [globalTollgate, setGlobalTollgate] = React.useState(tollgate);
   // const { updateTollgates, updateSolutionDesign } = useAppContext();
-  const [solutionDesign, setSolutionDesign] = React.useState(
-    tollgate[1]?.pre_requisites[3]
-  );
+  // const [solutionDesign, setSolutionDesign] = React.useState(
+  //   tollgate[1]?.pre_requisites[3]
+  // );
   const [modalStyle] = React.useState(getModalStyle);
   const classes = useRowStyles();
   const preventDefault = (event: React.SyntheticEvent) =>
@@ -61,9 +60,9 @@ export function Row({ tollgate }: any) {
     setEditionSuccess(!editionSuccess);
   };
 
-  const handleSaveButton = (preReq: any, value: any) => {
-    preReq === 'Solution Design' && updateSolutionDesign(value);
-  };
+  // const handleSaveButton = (preReq: any, value: any) => {
+  //   preReq === 'Solution Design' && updateSolutionDesign(value);
+  // };
   const handleConditionalModalOpen = (editingField: string) => {
     // const handleConditionalModalOpen = () => {
     setFieldToEdit(editingField);
@@ -75,12 +74,12 @@ export function Row({ tollgate }: any) {
     setConditionalModalOpen(false);
   };
 
-  const urlInputHandler = (preReq: string, value: string) => {
-    const newNarIdObject: object = { ...narIdObject };
-    // @ts-ignore
-    newNarIdObject.preReq.url = value;
-    setNarIdObject(newNarIdObject);
-  };
+  // const urlInputHandler = (preReq: string, value: string) => {
+  //   const newNarIdObject: object = { ...narIdObject };
+  //   // @ts-ignore
+  //   newNarIdObject.preReq.url = value;
+  //   setNarIdObject(newNarIdObject);
+  // };
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const deploymentPatternsSelect = event.target.value;
@@ -100,6 +99,22 @@ export function Row({ tollgate }: any) {
     handleSubmissionModalOpen();
     console.log('Is submitted es: ', rowName);
   };
+
+  const submissionEnabled = () => {
+    let counter = 0;
+    let preReqs = tollgate?.pre_requisites;
+    // preReqs
+    //   .map
+    // (preReq: any) =>
+    //   preReq.status === 'Completed' ||
+    //   (preReq.status === 'Not required' &&
+    //     console.log('El estatus es: ', preReq.status))
+    // ();
+    setSubmissionCounter(counter);
+  };
+
+  // console.log('el counter es: ', submissionCounter);
+  // console.log('el status es: ', tollgate?.pre_requisites);
 
   return (
     <React.Fragment>
@@ -171,11 +186,22 @@ export function Row({ tollgate }: any) {
                             className={classes.waltzPreReqLink}
                           >
                             <span style={{ marginLeft: 3 }}>
-                              <EditIcon style={{ marginRight: '2px' }} /> Edit
+                              {/* <EditIcon style={{ marginRight: '2px' }} />  */}
+                              Edit
                             </span>
                           </Link>
                         ) : (
-                          ''
+                          field?.name ===
+                            'Cloud Product Registration & Cloud Product Check' && (
+                            <Link
+                              href='https://backstage-app-dk1979-k.uki1f.paas.intranet.db.com/carf'
+                              target='_blank'
+                              rel='noopener'
+                              className={classes.waltzPreReqLink}
+                            >
+                              <span style={{ marginLeft: 3 }}>Edit</span>
+                            </Link>
+                          )
                         )}
 
                         {field?.name === 'Solution Design' ||
@@ -183,17 +209,20 @@ export function Row({ tollgate }: any) {
                         field?.name === 'Resiliency Measure Test Results' ||
                         field?.name ===
                           'Auditing, Logging, Monitoring, Alerting Metrics' ||
-                        field?.name === 'EKM Verification & Evidencing' ||
-                        field?.name ===
-                          'Cloud Product Registration & Cloud Product Check' ? (
+                        field?.name === 'EKM Verification & Evidencing' ? (
                           <Button
                             variant='text'
                             onClick={() =>
                               handleConditionalModalOpen(field.name)
                             }
-                            className={classes.editButton}
+                            style={{
+                              textTransform: 'capitalize',
+                              fontSize: '12px',
+                              marginRight: 12,
+                              marginTop: '5px',
+                            }}
                           >
-                            <EditIcon style={{ marginRight: '5px' }} /> Edit
+                            Edit
                           </Button>
                         ) : (
                           ''
@@ -239,7 +268,10 @@ export function Row({ tollgate }: any) {
                         )}
                         {field.status === 'Not started' && (
                           <span className={classes.notRequiredStatus}>
-                            <WatchLaterIcon className={classes.statusIcon} />
+                            <WatchLaterIcon
+                              className={classes.statusIcon}
+                              style={{ color: '#8894A8' }}
+                            />
                             {field.status}
                           </span>
                         )}
@@ -250,7 +282,9 @@ export function Row({ tollgate }: any) {
                       <TableCell
                         align='left'
                         style={{ overflow: 'hidden', width: '300px' }}
-                      ></TableCell>
+                      >
+                        hola label
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -296,9 +330,7 @@ export function Row({ tollgate }: any) {
           deploymentPatterns={isDeploymentPatterns}
           editionHandler={handleEdition}
           selectChangeHandler={handleSelectChange}
-          handleSave={handleSaveButton}
         />
-        {/* {conditionalBody} */}
       </Modal>
     </React.Fragment>
   );

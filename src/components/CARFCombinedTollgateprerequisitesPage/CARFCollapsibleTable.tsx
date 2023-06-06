@@ -1,6 +1,4 @@
 import React, { useContext } from 'react';
-// import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-// import { rows, createData, Fields, mySampleObject } from './mockedData';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -28,7 +26,7 @@ export const CARFCollapsibleTable = () => {
     <TableContainer component={Paper}>
       <Table aria-label='collapsible table'>
         <TableBody>
-          {store.tollgates.map((tollgate) => (
+          {store.tollgates.map((tollgate: any) => (
             <Row key={tollgate.name} tollgate={tollgate} />
           ))}
         </TableBody>
@@ -36,7 +34,6 @@ export const CARFCollapsibleTable = () => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component='div'
-        // count={rows.length}
         count={store.tollgates.length}
         rowsPerPage={rowsPerPage}
         page={page}

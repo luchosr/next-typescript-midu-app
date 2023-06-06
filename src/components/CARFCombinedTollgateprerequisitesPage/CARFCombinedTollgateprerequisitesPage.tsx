@@ -52,6 +52,11 @@ const useStyles = makeStyles((theme) =>
     withoutLabel: {
       marginTop: theme.spacing(3),
     },
+    accordionDetails: {
+      border: '1px dashed #30445D4D',
+      borderRadius: 5,
+      margin: '15px',
+    },
     homeButton: {
       display: 'flex',
       flexDirection: 'row',
@@ -126,7 +131,7 @@ export function InputAdornments() {
 
           <div className=''>
             <FormControl
-              className={clsx(classes.margin, classes.textField)}
+              className={clsx(classes.margin)}
               variant='filled'
               style={{ minWidth: '350px' }}
               onSubmit={(e) => console.log(value)}
@@ -170,13 +175,7 @@ export function InputAdornments() {
           >
             <Typography className={classes.heading}>Summary</Typography>
           </AccordionSummary>
-          <AccordionDetails
-            style={{
-              border: '1px dashed #30445D4D',
-              borderRadius: 5,
-              margin: '15px',
-            }}
-          >
+          <AccordionDetails className={classes.accordionDetails}>
             <Typography>
               <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <h3 style={{ marginRight: '100px', marginLeft: '35px' }}>
